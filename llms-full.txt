@@ -2,6 +2,431 @@
 
 ---
 
+# My coding agent kept re-reading the internet
+
+URL: https://blog.sarveshmohite.me/building-u2md/
+Published: 2026-11-24
+Tags: go, agents, crawlers
+
+> Inside u2md: turning docs sites into local Markdown an agent can actually use, one cache shared by every repo on the machine, and the four tildes of a Python traceback that broke search.
+
+Every time my coding agent needed a docs page, it went and fetched it. The same page, from the same site, in every repo
+and every session. Then it read all ten thousand tokens of it, sidebar included, to find the one paragraph it wanted.
+
+[u2md](https://github.com/CyberSarvesh/u2md) is what I built instead: one Go binary that turns a documentation site into
+clean Markdown **once**, keeps it on your machine, and hands an agent only the part it asked for. It started this month
+as a crawler and grew into something closer to a local library for docs. Almost everything worth writing about came
+from pointing it at real sites and watching it be wrong.
+
+<figure class="ux" role="img" aria-label="Terminal: u2md mirrors 30 pages of docusaurus.io, skipping 1058 pages from 12 older doc versions. Run again with a max age of one hour, all 30 pages come from the local store with no network requests.">
+<style>
+.ux{margin:0 0 1.6em;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,var(--panel),var(--bg-2));box-shadow:var(--shadow);font-family:var(--font-mono)}
+.ux-head{display:flex;align-items:center;gap:.45rem 1.1rem;padding:.65rem .9rem;font-size:.72rem;line-height:1.5;color:var(--ink-3);border-bottom:1px solid var(--line)}
+.ux-lights{display:flex;gap:6px}
+.ux-lights i{width:10px;height:10px;border-radius:50%;background:#28c840}
+.ux-lights i:first-child{background:#ff5f57}
+.ux-lights i:nth-child(2){background:#febc2e}
+.ux pre{margin:0;padding:1rem 1.1rem;background:none;border:0;border-radius:0;font-size:.76rem;line-height:1.65;color:var(--ink-2);overflow-x:auto;white-space:pre}
+.ux .p{color:var(--accent)}
+.ux .c{color:var(--ink)}
+.ux .n{color:var(--accent);font-weight:600}
+.ux .w{color:var(--warn)}
+.ux .m{color:var(--ink-3)}
+@media (max-width:600px){.ux pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:.7rem}}
+</style>
+<div class="ux-head"><span class="ux-lights"><i></i><i></i><i></i></span><span>u2md · docusaurus.io, twice</span></div>
+<pre><span class="p">$</span> <span class="c">u2md mirror https://docusaurus.io/docs -o docs --max-pages 30</span>
+Mirrored 30 pages -> docs
+Stats: attempted=30 cached=0 revalidated=0 … version-skipped=<span class="n">1058</span>
+Methods: docusaurus=30
+<span class="w">Warning: skipped 1058 pages in 12 other doc versions (/docs/2.x, /docs/3.0.1, …)</span>
+Start with: docusaurus.io/INDEX.md
+<span class="m"> </span>
+<span class="p">$</span> <span class="c">u2md mirror https://docusaurus.io/docs -o docs --max-pages 30 --max-age 1h</span>
+Stats: attempted=30 cached=<span class="n">30</span> revalidated=0 … version-skipped=1058
+<span class="m"># 4.4 s, then 1.1 s with zero requests: all 30 from the store</span></pre>
+</figure>
+
+## The shape of it
+
+<figure class="um" role="img" aria-label="u2md architecture. An agent asks u2md through the CLI or the MCP server. u2md first checks a shared store of raw responses kept by content hash; a fresh copy is served with no network. Only a stale copy is revalidated against the docs site, usually with a 304. Pages are converted into Markdown with an index, sections and token counts. Other repos on the same machine reuse the store with zero requests, and a pack carries docs and cache to a teammate or CI with no network.">
+<style>
+.um{margin:0 0 1.6em;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,var(--panel),var(--bg-2));box-shadow:var(--shadow);font-family:var(--font-mono)}
+.um-head,.um-key{display:flex;align-items:center;gap:.45rem 1.1rem;padding:.65rem .9rem;font-size:.72rem;line-height:1.5;color:var(--ink-3)}
+.um-head{border-bottom:1px solid var(--line)}
+.um-key{border-top:1px solid var(--line);flex-wrap:wrap}
+.um-lights{display:flex;gap:6px}
+.um-lights i{width:10px;height:10px;border-radius:50%;background:#28c840}
+.um-lights i:first-child{background:#ff5f57}
+.um-lights i:nth-child(2){background:#febc2e}
+.um-key i{display:inline-block;width:8px;height:8px;margin-right:.45rem;border-radius:50%;background:var(--c)}
+.um svg{display:block;width:100%;height:auto}
+.um .um-s{display:none}
+.um text{font:600 14px var(--font-mono);fill:var(--ink);text-anchor:middle}
+.um text.sub{font-size:10.5px;font-weight:400;fill:var(--ink-2)}
+.um text.lbl{font-size:10.5px;font-weight:500;fill:var(--c)}
+.um text.start{text-anchor:start}
+.um text.end{text-anchor:end}
+.um .box{fill:var(--panel-2);stroke:var(--line-2);stroke-width:1.2}
+.um .truth{fill:color-mix(in srgb,var(--accent) 10%,var(--panel-2));stroke:var(--accent)}
+.um .wire{fill:none;stroke:var(--c);stroke-width:1.4;opacity:.55}
+.um .dash{stroke-dasharray:4 4}
+.um .tip,.um .dot{fill:var(--c)}
+.um .ok{--c:var(--accent)}
+.um .net{--c:var(--info)}
+.um .pk{--c:var(--warn)}
+@media (max-width:600px){.um .um-l{display:none}.um .um-s{display:block}}
+@media (prefers-reduced-motion:reduce){.um .dot{display:none}}
+</style>
+<div class="um-head"><span class="um-lights"><i></i><i></i><i></i></span><span>u2md · where the bytes live</span></div>
+<svg class="um-l" viewBox="0 0 680 468" aria-hidden="true" focusable="false">
+<rect class="box" x="14" y="16" width="190" height="60" rx="10"/>
+<text x="109" y="44">agent</text>
+<text class="sub" x="109" y="62">Claude Code, Cursor, you</text>
+<rect class="box" x="245" y="16" width="190" height="60" rx="10"/>
+<text x="340" y="44">u2md</text>
+<text class="sub" x="340" y="62">CLI · MCP server</text>
+<rect class="box" x="476" y="16" width="190" height="60" rx="10"/>
+<text x="571" y="44">docs site</text>
+<text class="sub" x="571" y="62">asked only when stale</text>
+<g class="ok"><path class="wire" d="M204 46L245 46"/><path class="tip" d="M245.0 46.0L238.0 42.2L238.0 49.8Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0s" repeatCount="indefinite" path="M204 46L245 46"/></circle>
+<text class="lbl" x="224.5" y="38">ask</text>
+</g>
+<g class="net"><path class="wire dash" d="M435 46L476 46"/><path class="tip" d="M476.0 46.0L469.0 42.2L469.0 49.8Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.9s" repeatCount="indefinite" path="M435 46L476 46"/></circle>
+<text class="lbl" x="455.5" y="38">304?</text>
+</g>
+<g class="ok"><path class="wire" d="M300 76L300 110L217.5 110L217.5 158"/><path class="tip" d="M217.5 158.0L221.3 151.0L213.7 151.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0.4s" repeatCount="indefinite" path="M300 76L300 110L217.5 110L217.5 158"/></circle>
+<text class="lbl start" x="225.5" y="137">1. fresh? read it</text>
+</g>
+<g class="net"><path class="wire" d="M380 76L380 110L550.5 110L550.5 158"/><path class="tip" d="M550.5 158.0L554.3 151.0L546.7 151.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0.9s" repeatCount="indefinite" path="M380 76L380 110L550.5 110L550.5 158"/></circle>
+<text class="lbl start" x="558.5" y="137">2. convert</text>
+</g>
+<rect class="box truth" x="14" y="158" width="407" height="68" rx="10"/>
+<text x="217.5" y="190">shared store</text>
+<text class="sub" x="217.5" y="208">one per machine · raw bodies by sha256</text>
+<rect class="box" x="435" y="158" width="231" height="68" rx="10"/>
+<text x="550.5" y="190">Markdown</text>
+<text class="sub" x="550.5" y="208">INDEX · sections · tokens</text>
+<g class="ok"><path class="wire" d="M109 226L109 332"/><path class="tip" d="M109.0 332.0L112.8 325.0L105.2 325.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.2s" repeatCount="indefinite" path="M109 226L109 332"/></circle>
+<text class="lbl start" x="116" y="284">same bytes</text>
+</g>
+<g class="ok"><path class="wire" d="M340 226L340 332"/><path class="tip" d="M340.0 332.0L343.8 325.0L336.2 325.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.6s" repeatCount="indefinite" path="M340 226L340 332"/></circle>
+<text class="lbl start" x="347" y="284">hit</text>
+</g>
+<g class="pk"><path class="wire dash" d="M571 226L571 332"/><path class="tip" d="M571.0 332.0L574.8 325.0L567.2 325.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.4s" repeatCount="indefinite" path="M571 226L571 332"/></circle>
+<text class="lbl start" x="578" y="284">pack</text>
+</g>
+<rect class="box" x="14" y="332" width="190" height="64" rx="10"/>
+<text x="109" y="362">repo A</text>
+<text class="sub" x="109" y="380">downloads it once</text>
+<rect class="box" x="245" y="332" width="190" height="64" rx="10"/>
+<text x="340" y="362">repo B</text>
+<text class="sub" x="340" y="380">zero requests</text>
+<rect class="box" x="476" y="332" width="190" height="64" rx="10"/>
+<text x="571" y="362">teammate, CI</text>
+<text class="sub" x="571" y="380">unpack, no network</text>
+<text class="sub" x="340" y="440">a fresh page never touches the network: not DNS, not robots.txt</text>
+</svg>
+<svg class="um-s" viewBox="0 0 340 468" aria-hidden="true" focusable="false">
+<rect class="box" x="14" y="16" width="98" height="60" rx="10"/>
+<text x="63" y="44">agent</text>
+<text class="sub" x="63" y="62">asks</text>
+<rect class="box" x="121" y="16" width="98" height="60" rx="10"/>
+<text x="170" y="44">u2md</text>
+<text class="sub" x="170" y="62">CLI · MCP</text>
+<rect class="box" x="228" y="16" width="98" height="60" rx="10"/>
+<text x="277" y="44">docs site</text>
+<text class="sub" x="277" y="62">when stale</text>
+<g class="ok"><path class="wire" d="M112 46L121 46"/><path class="tip" d="M121.0 46.0L114.0 42.2L114.0 49.8Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0s" repeatCount="indefinite" path="M112 46L121 46"/></circle>
+</g>
+<g class="net"><path class="wire dash" d="M219 46L228 46"/><path class="tip" d="M228.0 46.0L221.0 42.2L221.0 49.8Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.9s" repeatCount="indefinite" path="M219 46L228 46"/></circle>
+</g>
+<g class="ok"><path class="wire" d="M145 76L145 110L109.5 110L109.5 158"/><path class="tip" d="M109.5 158.0L113.3 151.0L105.7 151.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0.4s" repeatCount="indefinite" path="M145 76L145 110L109.5 110L109.5 158"/></circle>
+<text class="lbl start" x="117.5" y="137">1. fresh?</text>
+</g>
+<g class="net"><path class="wire" d="M195 76L195 110L272.5 110L272.5 158"/><path class="tip" d="M272.5 158.0L276.3 151.0L268.7 151.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0.9s" repeatCount="indefinite" path="M195 76L195 110L272.5 110L272.5 158"/></circle>
+<text class="lbl end" x="264.5" y="137">2. convert</text>
+</g>
+<rect class="box truth" x="14" y="158" width="191" height="68" rx="10"/>
+<text x="109.5" y="190">store</text>
+<text class="sub" x="109.5" y="208">shared, by hash</text>
+<rect class="box" x="219" y="158" width="107" height="68" rx="10"/>
+<text x="272.5" y="190">Markdown</text>
+<text class="sub" x="272.5" y="208">sections</text>
+<g class="ok"><path class="wire" d="M63 226L63 332"/><path class="tip" d="M63.0 332.0L66.8 325.0L59.2 325.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.2s" repeatCount="indefinite" path="M63 226L63 332"/></circle>
+</g>
+<g class="ok"><path class="wire" d="M170 226L170 332"/><path class="tip" d="M170.0 332.0L173.8 325.0L166.2 325.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.6s" repeatCount="indefinite" path="M170 226L170 332"/></circle>
+<text class="lbl start" x="177" y="284">hit</text>
+</g>
+<g class="pk"><path class="wire dash" d="M277 226L277 332"/><path class="tip" d="M277.0 332.0L280.8 325.0L273.2 325.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.4s" repeatCount="indefinite" path="M277 226L277 332"/></circle>
+<text class="lbl end" x="270" y="284">pack</text>
+</g>
+<rect class="box" x="14" y="332" width="98" height="64" rx="10"/>
+<text x="63" y="362">repo A</text>
+<text class="sub" x="63" y="380">once</text>
+<rect class="box" x="121" y="332" width="98" height="64" rx="10"/>
+<text x="170" y="362">repo B</text>
+<text class="sub" x="170" y="380">0 requests</text>
+<rect class="box" x="228" y="332" width="98" height="64" rx="10"/>
+<text x="277" y="362">CI</text>
+<text class="sub" x="277" y="380">unpack</text>
+<text class="sub" x="170" y="440">fresh pages never touch the network</text>
+</svg>
+<div class="um-key"><span class="ok"><i></i>local, no network</span><span class="net"><i></i>network, only when stale</span><span class="pk"><i></i>sharing, no network</span></div>
+</figure>
+
+One rule shapes the whole thing: **the network is the slow, unreliable part, so touch it as little as possible.** A page
+is downloaded once, stored under the hash of its contents, and turned into Markdown from there. Every read after that
+is local.
+
+## Extraction is mostly deleting things
+
+A docs page is maybe a third documentation. The rest is sidebar, navbar, version picker, cookie banner, "Edit this
+page" and "Was this helpful?". u2md recognises Docusaurus, MkDocs Material, Mintlify, Sphinx and VitePress by their DOM
+markers and knows what to cut from each. Anything else falls back to `main`, `article` or `[role=main]`.
+
+Knowing what to cut was the easy half. Knowing what **not** to cut took real sites. In my first run against
+docusaurus.io:
+
+| on 30 docusaurus.io pages | first run | now |
+|---|---|---|
+| pages missing their title | 18 | 0 |
+| pages that were old-version copies | 18 | 0 |
+| callouts | a bare word: `tip` | `> **Tip**` |
+
+The titles were a lovely bug. Docusaurus puts a page's only `<h1>` inside a `<header>`, and deleting `<header>` is the
+first thing every extractor does. So the title left with the site chrome. Now the `h1` gets lifted out first, unless
+the page has another one.
+
+The versions were worse. docusaurus.io keeps a full copy of its docs for every release (`/docs/2.x/`, `/docs/3.0.1/`,
+a dozen more), and those sort before the current docs. A 30-page crawl spent most of its budget on near-identical old
+copies. Directories named like dotted versions, or `next`, are now skipped by default with a warning that lists them.
+Bare integers like `/v1/` are left alone, because those are usually API versions rather than duplicates.
+
+Python's docs were wrong more quietly. They use Sphinx's classic theme, which has none of the markers I'd taught it, so
+every page fell back to the generic extractor. The output still looked fine, which is exactly why nobody noticed. It
+knows the classic theme now.
+
+## Links are the hard part
+
+Converting HTML to Markdown is a library call. Making the links work afterwards is not. A page links to
+`/docs/install`, which redirects to `/docs/install/`, whose canonical URL is `/docs/installation`, and all three have
+to land on the same local file.
+
+So conversion runs in two passes. The first keeps every link absolute and only collects them. When the crawl is done
+and every redirect, canonical and dead link is known, the second pass rewrites links through
+[goldmark](https://github.com/yuin/goldmark)'s syntax tree instead of a regex. That's the difference between rewriting
+a link and "fixing" a URL that happened to appear inside a code sample.
+
+## The same page, byte for byte
+
+Mirror the same site twice and you get identical files. The crawl goes level by level with each level sorted, and
+everything after the download comes from the cached bytes, so `--offline` rebuilds are identical too.
+
+The sneaky enemy was the date. Every page's frontmatter records when it was fetched, and servers without `ETag` or
+`Last-Modified` look new on every request. So every file changed every day, and every changelog was a list of nothing.
+Now `fetched_at` means "first seen": if the body hashes the same as the cached one, the old date stays.
+
+That sounds like pedantry until you commit docs to git. Then a diff only shows up when the docs actually changed.
+
+## Four tildes broke my search
+
+Search is BM25 over heading-sized chunks. I tested it on the Python tutorial with *how do I handle exceptions with
+finally*, and the section that explains `finally` didn't make the top five.
+
+It wasn't the ranking. One chunk, "8.2 Exceptions", was 18,234 characters long. It had swallowed sections 8.3 to 8.7
+whole, including the one I was looking for. The culprit was in a code block a few lines down:
+
+```text
+>>> '2' + 2
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+    '2' + 2
+    ~~~~^~~
+TypeError: can only concatenate str (not "int") to str
+```
+
+That last caret line is Python pointing at the bad expression. Here's how my splitter decided what was code:
+
+```go
+// the old splitter, trimmed
+if strings.HasPrefix(trim, "```") || strings.HasPrefix(trim, "~~~") {
+	inFence = !inFence
+}
+```
+
+`~~~~^~~` starts with three tildes. So the parser thought the code block ended there, treated the real closing fence as
+the start of a new one, and read every heading after it as code. Five sections became one, and the answer drowned in it.
+
+Markdown has an actual rule for this. A fence only closes on a line made of the **same** character, at least as many
+of them, and nothing else:
+
+```go
+func (f fence) closes(line string) bool {
+	s, ok := trimIndent(line)
+	if !ok {
+		return false
+	}
+	n := 0
+	for n < len(s) && s[n] == f.char {
+		n++
+	}
+	return n >= f.n && strings.TrimSpace(s[n:]) == ""
+}
+```
+
+The fix that mattered more was structural. Headings, fences and anchors are now decided in exactly one package, which
+search, filters and section reads all share. So an anchor that search returns is always one that `read_section` can
+open. The `finally` section ranks first now.
+
+While I was in there, the stemmer turned out to file *handle* and *handling* under different words. Search bugs are
+like that: they never crash, they just make you a little worse at finding things.
+
+## Download once per machine
+
+Every repo used to keep its own cache. Now there's one store per machine (`~/.cache/u2md` on Linux), with raw
+responses kept by content hash. And with a `max_age`, a recent copy is served before anything else happens:
+
+```go
+if f.opt.MaxAge > 0 {
+	if r, ok := f.lookup(norm); ok && time.Since(r.CheckedAt) < f.opt.MaxAge {
+		return r, nil
+	}
+}
+```
+
+That check runs before DNS and before `robots.txt`. The robots file needed reading-through too, including the "this
+site has none" answer, or every warm run would still make one request per host. Copies older than `max_age` are
+revalidated with `ETag`/`Last-Modified`, which is usually a cheap `304`. If the server is down, the agent gets the last
+copy marked `cache: stale`. A refusal is never covered up that way. A 404, a robots rule or the SSRF guard saying no
+stays an error, and a `robots.txt` that couldn't be *reached* is a different error from one that said no.
+
+Sharing the store broke something, of course. Each process loaded the index, added its entries and wrote its whole
+snapshot back on exit, so the last process to finish erased everyone else's work. It's the same lost update as the
+[zombie worker in TaskForge](../building-taskforge/) wearing different clothes. Now a flush takes a lock file,
+re-reads what's on disk and writes back only the keys it changed.
+
+## Agents don't need the whole page
+
+Every mirrored site starts with an `INDEX.md` listing pages with token counts, so an agent can budget before reading.
+That still meant reading whole pages, so there are now three smaller ways in:
+
+- **`read_section`** returns one section and its subsections, by `page.md#anchor`.
+- **`get_context`** packs the best-matching sections into a token budget.
+- **`find_examples`** returns only the code blocks, which is often all an agent wanted.
+
+Here's the start of `get_context` with a budget of 600 tokens, on that same question:
+
+```text
+<!-- u2md context: 2 sections, ~599 of 600 tokens, 11 relevant sections did not fit -->
+
+## 8. Errors and Exceptions > 8.7. Defining Clean-up Actions
+Source: 3/tutorial/errors.md#87-defining-clean-up-actions
+```
+
+Packing goes in rank order. A section that doesn't fit is skipped, but smaller ones below it still get a chance. It
+stops once matches fall under a quarter of the best score, because past that point it's filler, not context. If even
+the best section is too big on its own, it's cut on a line or word boundary and marked as cut (closing any code fence
+it interrupted), so the answer is never empty. And it says what it left out, so the agent knows to ask for more.
+
+## Configure once
+
+Flags are fine for a person and annoying for an agent, which has to remember them every call. So a `u2md.yaml` in the
+repo, plus an optional global one, holds the settings:
+
+```yaml
+defaults:
+  max_age: 7d
+  drop_sections: ['Was this helpful?', 'Changelog*']
+
+sites:
+  - url: https://docs.stripe.com/api
+    keep_sections: ['Parameters', 'Returns']
+```
+
+The CLI and the MCP server both pick it up, so the agent never passes a setting. Unknown keys are an error, because a
+typo that silently does nothing is the worst kind. Pages converted with filters record a hash of the rules in their
+frontmatter, so a filtered copy is never mistaken for the real thing.
+
+## Sharing without the network
+
+`u2md pack` bundles the Markdown together with the raw responses behind it into one file. Packing the same tree twice
+gives the same bytes, so packs diff cleanly. The 17-page Python tutorial came to 265 KB.
+
+A teammate with an empty cache can unpack it and rebuild with `--offline`, and get the original files byte for byte.
+I checked. Since a pack can come from anywhere, unpacking is defensive: every body must hash to its own name, nothing
+may land outside the target folder, only Markdown goes under `docs/`, and an old pack can never replace a newer local
+copy.
+
+## A crawler you can't point inward
+
+A tool that fetches whatever URL an agent hands it is an SSRF bug waiting for a prompt. So u2md resolves a host once,
+refuses it if any address is private, loopback or link-local, and then connects to the checked IP instead of the
+hostname, so DNS can't answer differently the second time. Every redirect gets the same check, and proxy settings are
+ignored on purpose, because a proxy would make the check meaningless.
+
+It also has to explain itself. For a while, blocking `localtest.me` said `disallowed by robots.txt`, because fetching
+`robots.txt` is what hit the guard first. Now it says:
+
+```text
+u2md: error: fetch: blocked by SSRF guard: localtest.me -> 127.0.0.1 (pass --allow-private to permit private, loopback or link-local hosts)
+```
+
+## Try it
+
+You need Go 1.26 or newer:
+
+```bash
+go install github.com/CyberSarvesh/u2md/cmd/u2md@latest
+u2md mirror https://docs.python.org/3/tutorial/ -o docs --max-pages 25
+u2md context docs/docs.python.org "how do I handle exceptions with finally" --budget 1500
+```
+
+To give it to Claude Code or Cursor, add it to your MCP config:
+
+```json
+{
+  "mcpServers": {
+    "u2md": { "command": "u2md", "args": ["mcp", "--dir", ".u2md-docs"] }
+  }
+}
+```
+
+Some honest limits:
+
+- **No JavaScript.** Docs that only exist after a browser runs a script come out empty. u2md warns when a page looks
+  like that, but it can't fix it.
+- **Search is words, not meaning.** BM25 and a small stemmer are deterministic and fast, and they miss synonyms.
+- **Token counts are estimates**, at about four characters a token.
+- One known leftover: docusaurus.io's `/docs/next` landing page still gets mirrored next to the current one.
+
+## What I'd add next
+
+- **Section-level changelogs** for `sync`, so "the docs changed" becomes "the section on retries changed".
+- **Opt-in rendering** for the JavaScript-only sites, kept out of the default path.
+- **Better ranking for short, precise sections**, which still lose to long ones that mention everything.
+
+> The network is the part you can't fix. Use it once, keep the bytes, and make everything after that local.
+
+The code is [on GitHub](https://github.com/CyberSarvesh/u2md). If you have a docs site it mangles, that's the issue I
+most want to read.
+
+---
+
 # My terminal has movie posters now
 
 URL: https://blog.sarveshmohite.me/building-tuinime/

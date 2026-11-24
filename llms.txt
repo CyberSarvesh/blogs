@@ -4,6 +4,7 @@
 
 ## Writing
 
+- [My coding agent kept re-reading the internet](https://blog.sarveshmohite.me/building-u2md/) (2026-11-24): Inside u2md: turning docs sites into local Markdown an agent can actually use, one cache shared by every repo on the machine, and the four tildes of a Python traceback that broke search.
 - [My terminal has movie posters now](https://blog.sarveshmohite.me/building-tuinime/) (2026-11-22): Inside TuiNime, an anime TUI in Rust: one event loop, background tasks, pictures made of text, and a release built from a git tag.
 - [hello, world (from PID 1)](https://blog.sarveshmohite.me/hello-world/) (2026-11-14): Why this blog exists, what I plan to write about, and why it lives on its own subdomain.
 - [My API never sends emails (and yours shouldn’t either)](https://blog.sarveshmohite.me/never-send-email-in-a-request/) (2026-11-10): What I learned building TaskForge: move slow work out of the request path with Postgres, Redis and a pool of workers.
