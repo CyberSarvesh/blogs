@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="en" class="no-js" data-theme="dark" data-astro-cid-hkbrpulz><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>My job queue said completed. It was lying. · Sarvesh Mohite</title><meta name="description" content="Inside TaskForge: the small queue I built in March, the ways it lost work, and the November rebuild with leases, fencing tokens and a factory floor you can break."><link rel="canonical" href="https://blog.sarveshmohite.me/building-taskforge/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="Sarvesh's blog" href="/rss.xml"><link rel="sitemap" href="/sitemap-index.xml"><meta name="theme-color" content="#07090c"><meta property="og:type" content="article"><meta property="og:title" content="My job queue said completed. It was lying. · Sarvesh Mohite"><meta property="og:description" content="Inside TaskForge: the small queue I built in March, the ways it lost work, and the November rebuild with leases, fencing tokens and a factory floor you can break."><meta property="og:url" content="https://blog.sarveshmohite.me/building-taskforge/"><meta property="og:site_name" content="Sarvesh Mohite"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="My job queue said completed. It was lying. · Sarvesh Mohite"><meta name="twitter:description" content="Inside TaskForge: the small queue I built in March, the ways it lost work, and the November rebuild with leases, fencing tokens and a factory floor you can break."><meta name="author" content="Sarvesh Mohite"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://sarveshmohite.me/#website","url":"https://sarveshmohite.me/","name":"Sarvesh Mohite","alternateName":["CyberSarvesh","sarveshmohite.me"],"publisher":{"@id":"https://sarveshmohite.me/#person"}},{"@type":"Person","@id":"https://sarveshmohite.me/#person","name":"Sarvesh Mohite","alternateName":"CyberSarvesh","url":"https://sarveshmohite.me/","jobTitle":"Backend Developer","address":{"@type":"PostalAddress","addressLocality":"Mumbai","addressCountry":"IN"},"sameAs":["https://github.com/CyberSarvesh","https://leetcode.com/u/darth_sarvesh/","https://www.hackerrank.com/sarveshmohite201"]},{"@type":"BlogPosting","@id":"https://blog.sarveshmohite.me/building-taskforge/#post","headline":"My job queue said completed. It was lying.","description":"Inside TaskForge: the small queue I built in March, the ways it lost work, and the November rebuild with leases, fencing tokens and a factory floor you can break.","url":"https://blog.sarveshmohite.me/building-taskforge/","mainEntityOfPage":"https://blog.sarveshmohite.me/building-taskforge/","datePublished":"2026-05-22T00:00:00.000Z","dateModified":"2026-11-22T00:00:00.000Z","keywords":"backend, queues, postgres, redis","author":{"@id":"https://sarveshmohite.me/#person"},"publisher":{"@id":"https://sarveshmohite.me/#person"},"isPartOf":{"@id":"https://sarveshmohite.me/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sarveshmohite.me/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://blog.sarveshmohite.me/"},{"@type":"ListItem","position":3,"name":"My job queue said completed. It was lying.","item":"https://blog.sarveshmohite.me/building-taskforge/"}]}]}</script><meta name="generator" content="Astro v7.4.12"><script>
+      (() => {
+        const apply = () => {
+          let t = null;
+          try { t = localStorage.getItem('theme'); } catch {}
+          if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          document.documentElement.dataset.theme = t;
+          document.documentElement.classList.remove('no-js');
+          // Skip the boot intro (and start hero animations at once) after the first visit.
+          let booted = false;
+          try { booted = sessionStorage.getItem('booted') === '1'; } catch {}
+          if (booted || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('booted');
+          }
+        };
+        apply();
+        document.addEventListener('astro:after-swap', apply);
+      })();
+    </script><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.cRmvXsZP.js"></script><link rel="stylesheet" href="/_astro/Base.D9Oh3bVJ.css"><link rel="stylesheet" href="/_astro/_..CHtkLoya.css"><script type="module" src="/_astro/page.CFYkGvk_.js"></script><style>[data-astro-transition-scope="astro-sj7yunko-1"] { view-transition-name: post-building-taskforge; }@layer astro { ::view-transition-old(post-building-taskforge) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(post-building-taskforge) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(post-building-taskforge) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(post-building-taskforge) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-sj7yunko-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-sj7yunko-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-sj7yunko-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-sj7yunko-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-sj7yunko-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-sj7yunko-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-sj7yunko-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-sj7yunko-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head><body data-astro-cid-hkbrpulz><a class="skip" href="#main" data-astro-cid-hkbrpulz>Skip to content</a><div class="cursor-glow" aria-hidden="true" data-astro-cid-hkbrpulz></div><header data-astro-transition-persist="nav" class="nav" data-astro-cid-wpvy4v7s><div class="wrap bar" data-astro-cid-wpvy4v7s><a class="logo" href="https://sarveshmohite.me/" aria-label="Sarvesh Mohite, home" data-astro-cid-wpvy4v7s><span class="u" data-astro-cid-wpvy4v7s>sarvesh</span><span class="at" data-astro-cid-wpvy4v7s>@</span><span class="h" data-astro-cid-wpvy4v7s>mohite</span><span class="c" data-astro-cid-wpvy4v7s>:~/blog$</span><span class="caret" aria-hidden="true" data-astro-cid-wpvy4v7s></span></a><nav aria-label="Primary" data-astro-cid-wpvy4v7s><ul data-astro-cid-wpvy4v7s><li data-astro-cid-wpvy4v7s><a href="https://sarveshmohite.me/projects/" data-nav data-astro-cid-wpvy4v7s><span class="slash" data-astro-cid-wpvy4v7s>/</span>projects</a></li><li data-astro-cid-wpvy4v7s><a href="https://sarveshmohite.me/#stack" data-nav data-astro-cid-wpvy4v7s><span class="slash" data-astro-cid-wpvy4v7s>/</span>stack</a></li><li data-astro-cid-wpvy4v7s><a href="https://sarveshmohite.me/#shell" data-nav data-astro-cid-wpvy4v7s><span class="slash" data-astro-cid-wpvy4v7s>/</span>shell</a></li><li data-astro-cid-wpvy4v7s><a href="/" class="active" data-nav data-astro-cid-wpvy4v7s><span class="slash" data-astro-cid-wpvy4v7s>/</span>blog</a></li><li data-astro-cid-wpvy4v7s><a href="https://sarveshmohite.me/#contact" data-nav data-astro-cid-wpvy4v7s><span class="slash" data-astro-cid-wpvy4v7s>/</span>contact</a></li></ul></nav><div class="tools" data-astro-cid-wpvy4v7s><button class="icon-btn kbar" type="button" data-open-palette aria-label="Open command palette" data-astro-cid-wpvy4v7s><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" data-astro-cid-wpvy4v7s><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 17l6-6-6-6M12 19h8" data-astro-cid-wpvy4v7s></path></svg><kbd data-astro-cid-wpvy4v7s>Ctrl K</kbd></button><button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle light and dark theme" data-astro-cid-wpvy4v7s><svg class="sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" data-astro-cid-wpvy4v7s><circle cx="12" cy="12" r="4" fill="currentColor" data-astro-cid-wpvy4v7s></circle><g stroke="currentColor" stroke-width="2" stroke-linecap="round" data-astro-cid-wpvy4v7s><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" data-astro-cid-wpvy4v7s></path></g></svg><svg class="moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" data-astro-cid-wpvy4v7s><path fill="currentColor" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" data-astro-cid-wpvy4v7s></path></svg></button></div></div></header><script type="module">function e(){let e=document.documentElement,t=e.dataset.theme===`light`?`dark`:`light`,n=()=>{e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}},r=document;r.startViewTransition&&!matchMedia(`(prefers-reduced-motion: reduce)`).matches?r.startViewTransition(n):n()}if(window.__toggleTheme=e,!window.__navInit){window.__navInit=!0,document.addEventListener(`click`,t=>{t.target.closest(`[data-theme-toggle]`)&&e()});let t=0;window.addEventListener(`scroll`,()=>{let e=window.scrollY,n=document.querySelector(`.nav`);n?.classList.toggle(`scrolled`,e>8),n?.classList.toggle(`hide`,e>400&&e>t),t=e},{passive:!0})}</script><main id="main" data-astro-cid-hkbrpulz><div class="progress" aria-hidden="true" data-astro-cid-3vzhc3g7></div><article class="wrap post" data-astro-cid-3vzhc3g7><header class="head" data-astro-cid-3vzhc3g7><a class="back mono" href="/" data-astro-cid-3vzhc3g7>← cd ..</a><div class="meta mono" data-astro-cid-3vzhc3g7><time datetime="2026-05-22T00:00:00.000Z" data-astro-cid-3vzhc3g7>22 May 2026</time><span data-astro-cid-3vzhc3g7>·</span><span data-astro-cid-3vzhc3g7>6 min read</span><span data-astro-cid-3vzhc3g7>· updated 22 Nov 2026</span></div><h1 data-astro-transition-scope="astro-sj7yunko-1" data-astro-cid-3vzhc3g7>My job queue said completed. It was lying.</h1><p class="desc" data-astro-cid-3vzhc3g7>Inside TaskForge: the small queue I built in March, the ways it lost work, and the November rebuild with leases, fencing tokens and a factory floor you can break.</p><ul class="tags mono" data-astro-cid-3vzhc3g7><li data-astro-cid-3vzhc3g7><a href="/tags/backend/" data-astro-cid-3vzhc3g7>#backend</a></li><li data-astro-cid-3vzhc3g7><a href="/tags/queues/" data-astro-cid-3vzhc3g7>#queues</a></li><li data-astro-cid-3vzhc3g7><a href="/tags/postgres/" data-astro-cid-3vzhc3g7>#postgres</a></li><li data-astro-cid-3vzhc3g7><a href="/tags/redis/" data-astro-cid-3vzhc3g7>#redis</a></li></ul></header><div class="layout" data-astro-cid-3vzhc3g7><aside class="toc mono" aria-label="On this page" data-astro-cid-3vzhc3g7><p data-astro-cid-3vzhc3g7>on this page</p><ol data-astro-cid-3vzhc3g7><li class="d2" data-astro-cid-3vzhc3g7><a href="#march-sixty-lines-of-optimism" data-toc="march-sixty-lines-of-optimism" data-astro-cid-3vzhc3g7>March: sixty lines of optimism</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#the-shape-of-it-now" data-toc="the-shape-of-it-now" data-astro-cid-3vzhc3g7>The shape of it now</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#a-job-is-borrowed-never-owned" data-toc="a-job-is-borrowed-never-owned" data-astro-cid-3vzhc3g7>A job is borrowed, never owned</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#the-dead-sometimes-come-back" data-toc="the-dead-sometimes-come-back" data-astro-cid-3vzhc3g7>The dead sometimes come back</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#urgent-shouldnt-mean-forever" data-toc="urgent-shouldnt-mean-forever" data-astro-cid-3vzhc3g7>Urgent shouldn’t mean forever</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#november-giving-it-a-face" data-toc="november-giving-it-a-face" data-astro-cid-3vzhc3g7>November: giving it a face</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#testing-by-breaking-it" data-toc="testing-by-breaking-it" data-astro-cid-3vzhc3g7>Testing by breaking it</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#try-to-lose-a-job" data-toc="try-to-lose-a-job" data-astro-cid-3vzhc3g7>Try to lose a job</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#what-id-add-next" data-toc="what-id-add-next" data-astro-cid-3vzhc3g7>What I’d add next</a></li></ol></aside><div class="prose" data-astro-cid-3vzhc3g7><p>A job queue has one promise to keep: if it says it has your job, your job happens. It’s a very easy promise to make in
+sixty lines of TypeScript, and a surprisingly easy one to break in the same sixty.</p>
+<p><a href="https://github.com/CyberSarvesh/TaskForge">TaskForge</a> started that small in March 2026, as an API, a Redis list and
+one worker. <strong>The frontend is recent.</strong> It was built in November 2026, along with the rewrite that made the backend
+survive crashes, and this post was updated to cover both. So it’s a story in two halves: the queue as it was, and what
+it took to make it honest.</p>
+<p><img src="/media/taskforge/demo.gif" alt="Jobs flowing across the TaskForge factory floor, a worker being killed, and the other workers finishing its jobs"></p>
+<h2 id="march-sixty-lines-of-optimism">March: sixty lines of optimism</h2>
+<p>The first worker took an ID from Redis, loaded the row from Postgres and did this:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">// March 2026, trimmed</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">await</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> query</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"UPDATE jobs SET status = $1 WHERE id = $2"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"processing"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, jobId]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (job.type </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">===</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "email"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">  await</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> emailJob</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(job.payload);</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (job.type </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">===</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "report"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">  await</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> reportJob</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(job.payload);</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">await</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> query</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">  "UPDATE jobs SET status = $1, completed_at = NOW() WHERE id = $2"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">  [</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"completed"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, jobId]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">);</span></span></code></pre>
+<p>Read it again with a job of type <code>nonsense</code>. Neither <code>if</code> matches, nothing runs, and the job is marked <strong>completed</strong>.</p>
+<p>That was the funny bug. These are the others that turned up when that version was finally poked properly:</p>
+<table>
+<thead>
+<tr>
+<th>what happened</th>
+<th>what March did</th>
+<th>what it does now</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unknown job type</td>
+<td>marked it completed</td>
+<td>rejects it</td>
+</tr>
+<tr>
+<td>worker killed mid-job</td>
+<td>processing, forever</td>
+<td>another worker finishes it</td>
+</tr>
+<tr>
+<td>Redis down</td>
+<td>request hung, job orphaned</td>
+<td>accepts it, runs it later</td>
+</tr>
+<tr>
+<td>Postgres restarted</td>
+<td>API crashed</td>
+<td>reconnects</td>
+</tr>
+<tr>
+<td>empty database</td>
+<td>every request failed</td>
+<td>migrates itself</td>
+</tr>
+</tbody>
+</table>
+<p>None of these show up on the happy path, which is the only path a demo ever takes.</p>
+<h2 id="the-shape-of-it-now">The shape of it now</h2>
+<figure class="tf" role="img" aria-label="TaskForge architecture. The API commits each job to Postgres, then adds its id to Redis, and streams changes to the factory floor. Workers take ids from Redis and renew leases in Postgres. When a killed worker falls silent its lease expires and another worker takes over the job.">
+<style>
+.tf{margin:0 0 1.6em;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,var(--panel),var(--bg-2));box-shadow:var(--shadow);font-family:var(--font-mono)}
+.tf-head,.tf-key{display:flex;align-items:center;gap:.45rem 1.1rem;padding:.65rem .9rem;font-size:.72rem;line-height:1.5;color:var(--ink-3)}
+.tf-head{border-bottom:1px solid var(--line)}
+.tf-key{border-top:1px solid var(--line);flex-wrap:wrap}
+.tf-lights{display:flex;gap:6px}
+.tf-lights i{width:10px;height:10px;border-radius:50%;background:#28c840}
+.tf-lights i:first-child{background:#ff5f57}
+.tf-lights i:nth-child(2){background:#febc2e}
+.tf-key i{display:inline-block;width:8px;height:8px;margin-right:.45rem;border-radius:50%;background:var(--c)}
+.tf svg{display:block;width:100%;height:auto}
+.tf .tf-s{display:none}
+.tf text{font:600 14px var(--font-mono);fill:var(--ink);text-anchor:middle}
+.tf text.sub{font-size:10.5px;font-weight:400;fill:var(--ink-2)}
+.tf text.lbl{font-size:10.5px;font-weight:500;fill:var(--c)}
+.tf text.start{text-anchor:start}
+.tf text.end{text-anchor:end}
+.tf .box{fill:var(--panel-2);stroke:var(--line-2);stroke-width:1.2}
+.tf .truth{fill:color-mix(in srgb,var(--accent) 10%,var(--panel-2));stroke:var(--accent)}
+.tf .dead{fill:color-mix(in srgb,var(--warn) 10%,var(--panel-2));stroke:var(--warn);stroke-dasharray:5 4}
+.tf .wire{fill:none;stroke:var(--c);stroke-width:1.4;opacity:.55}
+.tf .dash{stroke-dasharray:4 4}
+.tf .tip,.tf .dot{fill:var(--c)}
+.tf .ok{--c:var(--accent)}
+.tf .bad{--c:var(--warn)}
+.tf .net{--c:var(--info)}
+@media (max-width:600px){.tf .tf-l{display:none}.tf .tf-s{display:block}}
+@media (prefers-reduced-motion:reduce){.tf .dot{display:none}}
+</style>
+<div class="tf-head"><span class="tf-lights"><i></i><i></i><i></i></span><span>taskforge · how it survives</span></div>
+<svg class="tf-l" viewBox="0 0 680 468" aria-hidden="true" focusable="false">
+<rect class="box " x="14" y="16" width="190" height="60" rx="10"/>
+<text x="109" y="44">client</text>
+<text class="sub" x="109" y="62">has slow work to do</text>
+<rect class="box " x="245" y="16" width="190" height="60" rx="10"/>
+<text x="340" y="44">API</text>
+<text class="sub" x="340" y="62">saves it, answers fast</text>
+<rect class="box " x="476" y="16" width="190" height="60" rx="10"/>
+<text x="571" y="44">floor</text>
+<text class="sub" x="571" y="62">the factory you watch</text>
+<g class="ok"><path class="wire" d="M204 46L245 46"/><path class="tip" d="M245.0 46.0L238.0 42.2L238.0 49.8Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0s" repeatCount="indefinite" path="M204 46L245 46"/></circle>
+<text class="lbl " x="224.5" y="38">job</text>
+</g>
+<g class="net"><path class="wire" d="M435 46L476 46"/><path class="tip" d="M476.0 46.0L469.0 42.2L469.0 49.8Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.9s" repeatCount="indefinite" path="M435 46L476 46"/></circle>
+<text class="lbl " x="455.5" y="38">SSE</text>
+</g>
+<g class="ok"><path class="wire" d="M300 76L300 110L217.5 110L217.5 158"/><path class="tip" d="M217.5 158.0L221.3 151.0L213.7 151.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0.4s" repeatCount="indefinite" path="M300 76L300 110L217.5 110L217.5 158"/></circle>
+<text class="lbl start" x="225.5" y="137">1. commit</text>
+</g>
+<g class="net"><path class="wire" d="M380 76L380 110L550.5 110L550.5 158"/><path class="tip" d="M550.5 158.0L554.3 151.0L546.7 151.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0.9s" repeatCount="indefinite" path="M380 76L380 110L550.5 110L550.5 158"/></circle>
+<text class="lbl start" x="558.5" y="137">2. add id</text>
+</g>
+<rect class="box truth" x="14" y="158" width="407" height="68" rx="10"/>
+<text x="217.5" y="190">Postgres</text>
+<text class="sub" x="217.5" y="208">the truth: jobs, leases, events</text>
+<rect class="box " x="435" y="158" width="231" height="68" rx="10"/>
+<text x="550.5" y="190">Redis</text>
+<text class="sub" x="550.5" y="208">just an index of ids</text>
+<g class="ok"><path class="wire" d="M109 332L109 226"/><path class="tip" d="M109.0 226.0L105.2 233.0L112.8 233.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.2s" repeatCount="indefinite" path="M109 332L109 226"/></circle>
+<text class="lbl start" x="116" y="284">renew</text>
+</g>
+<g class="bad"><path class="wire dash" d="M340 332L340 262L399 262L399 226"/><path class="tip" d="M399.0 226.0L395.2 233.0L402.8 233.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.6s" repeatCount="indefinite" path="M340 332L340 262L399 262L399 226"/></circle>
+<text class="lbl start" x="347" y="296">silence</text>
+</g>
+<g class="net"><path class="wire" d="M571 226L571 332"/><path class="tip" d="M571.0 332.0L574.8 325.0L567.2 325.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.4s" repeatCount="indefinite" path="M571 226L571 332"/></circle>
+<text class="lbl start" x="578" y="284">3. pop id</text>
+</g>
+<rect class="box " x="14" y="332" width="190" height="64" rx="10"/>
+<text x="109" y="362">anvil-1</text>
+<text class="sub" x="109" y="380">working</text>
+<rect class="box dead" x="245" y="332" width="190" height="64" rx="10"/>
+<text x="340" y="362">anvil-2</text>
+<text class="sub" x="340" y="380">killed</text>
+<rect class="box " x="476" y="332" width="190" height="64" rx="10"/>
+<text x="571" y="362">anvil-3</text>
+<text class="sub" x="571" y="380">takes over</text>
+<g class="bad"><path class="wire dash" d="M340 396L340 432L571 432L571 396"/><path class="tip" d="M571.0 396.0L567.2 403.0L574.8 403.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="2.1s" repeatCount="indefinite" path="M340 396L340 432L571 432L571 396"/></circle>
+<text class="lbl " x="455.5" y="452">lease expires, job moves</text>
+</g>
+</svg>
+<svg class="tf-s" viewBox="0 0 340 468" aria-hidden="true" focusable="false">
+<rect class="box " x="14" y="16" width="98" height="60" rx="10"/>
+<text x="63" y="44">client</text>
+<text class="sub" x="63" y="62">wants work</text>
+<rect class="box " x="121" y="16" width="98" height="60" rx="10"/>
+<text x="170" y="44">API</text>
+<text class="sub" x="170" y="62">answers fast</text>
+<rect class="box " x="228" y="16" width="98" height="60" rx="10"/>
+<text x="277" y="44">floor</text>
+<text class="sub" x="277" y="62">what you see</text>
+<g class="ok"><path class="wire" d="M112 46L121 46"/><path class="tip" d="M121.0 46.0L114.0 42.2L114.0 49.8Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0s" repeatCount="indefinite" path="M112 46L121 46"/></circle>
+</g>
+<g class="net"><path class="wire" d="M219 46L228 46"/><path class="tip" d="M228.0 46.0L221.0 42.2L221.0 49.8Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.9s" repeatCount="indefinite" path="M219 46L228 46"/></circle>
+</g>
+<g class="ok"><path class="wire" d="M145 76L145 110L109.5 110L109.5 158"/><path class="tip" d="M109.5 158.0L113.3 151.0L105.7 151.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0.4s" repeatCount="indefinite" path="M145 76L145 110L109.5 110L109.5 158"/></circle>
+<text class="lbl start" x="117.5" y="137">1. commit</text>
+</g>
+<g class="net"><path class="wire" d="M195 76L195 110L272.5 110L272.5 158"/><path class="tip" d="M272.5 158.0L276.3 151.0L268.7 151.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="0.9s" repeatCount="indefinite" path="M195 76L195 110L272.5 110L272.5 158"/></circle>
+<text class="lbl end" x="264.5" y="137">2. add id</text>
+</g>
+<rect class="box truth" x="14" y="158" width="191" height="68" rx="10"/>
+<text x="109.5" y="190">Postgres</text>
+<text class="sub" x="109.5" y="208">the truth</text>
+<rect class="box " x="219" y="158" width="107" height="68" rx="10"/>
+<text x="272.5" y="190">Redis</text>
+<text class="sub" x="272.5" y="208">just an index</text>
+<g class="ok"><path class="wire" d="M63 332L63 226"/><path class="tip" d="M63.0 226.0L59.2 233.0L66.8 233.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.2s" repeatCount="indefinite" path="M63 332L63 226"/></circle>
+<text class="lbl start" x="70" y="284">renew</text>
+</g>
+<g class="bad"><path class="wire dash" d="M170 332L170 262L183 262L183 226"/><path class="tip" d="M183.0 226.0L179.2 233.0L186.8 233.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.6s" repeatCount="indefinite" path="M170 332L170 262L183 262L183 226"/></circle>
+<text class="lbl start" x="177" y="296">silence</text>
+</g>
+<g class="net"><path class="wire" d="M277 226L277 332"/><path class="tip" d="M277.0 332.0L280.8 325.0L273.2 325.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="1.4s" repeatCount="indefinite" path="M277 226L277 332"/></circle>
+<text class="lbl end" x="270" y="284">3. pop id</text>
+</g>
+<rect class="box " x="14" y="332" width="98" height="64" rx="10"/>
+<text x="63" y="362">anvil-1</text>
+<text class="sub" x="63" y="380">working</text>
+<rect class="box dead" x="121" y="332" width="98" height="64" rx="10"/>
+<text x="170" y="362">anvil-2</text>
+<text class="sub" x="170" y="380">killed</text>
+<rect class="box " x="228" y="332" width="98" height="64" rx="10"/>
+<text x="277" y="362">anvil-3</text>
+<text class="sub" x="277" y="380">takes over</text>
+<g class="bad"><path class="wire dash" d="M170 396L170 432L277 432L277 396"/><path class="tip" d="M277.0 396.0L273.2 403.0L280.8 403.0Z"/>
+<circle class="dot" r="3.5"><animateMotion dur="2.6s" begin="2.1s" repeatCount="indefinite" path="M170 396L170 432L277 432L277 396"/></circle>
+<text class="lbl " x="170" y="452">lease expires, job moves</text>
+</g>
+</svg>
+<div class="tf-key"><span class="ok"><i></i>durable</span><span class="net"><i></i>fast, rebuildable</span><span class="bad"><i></i>failure and recovery</span></div>
+</figure>
+<p>The important change is who gets to be right. <strong>Postgres holds the truth. Redis is only an index.</strong> You can delete the
+whole Redis key and lose nothing, because every worker also runs a small sweeper that puts due jobs back:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">await</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> redis.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">zadd</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">QUEUE_KEY</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"NX"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">members);</span></span></code></pre>
+<p>It’s a sorted set and not a list, so adding the same ID twice does nothing. That makes “not sure it’s in there? add it
+again” a safe repair strategy.</p>
+<h2 id="a-job-is-borrowed-never-owned">A job is borrowed, never owned</h2>
+<p>A worker that dies can’t tell you it died. So claiming a job only lends it out: the worker gets a lease, and renews it
+with a heartbeat for as long as the job runs. A killed process stops renewing, and that silence is the signal.</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">SELECT</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> id </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">FROM</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> jobs</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">WHERE</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> status</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> =</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> 'processing'</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> AND</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (lease_until </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">IS</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> NULL</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> OR</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> lease_until </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">&lt;</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> now</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">())</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">LIMIT</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 500</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> FOR</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> UPDATE</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> SKIP</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> LOCKED</span></span></code></pre>
+<p><code>SKIP LOCKED</code> is doing quiet, lovely work there. Every worker can run that sweep at the same moment and each gets
+different rows, so there is no leader to elect and no leader to lose.</p>
+<h2 id="the-dead-sometimes-come-back">The dead sometimes come back</h2>
+<p>Leases create a nastier problem. A worker frozen for fifteen seconds looks exactly like a dead one. Its job gets handed
+to somebody else, and then it wakes up, finishes, and proudly writes a result over the new owner’s.</p>
+<p>So every claim comes with a random token, and every write has to show it:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">-- trimmed</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">UPDATE</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> jobs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">SET</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> status</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> =</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> 'completed'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> $</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">::jsonb, lease_token </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> NULL</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">WHERE</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> id </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> $</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> AND</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> lease_token </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> $</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> AND</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> status</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> =</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> 'processing'</span></span></code></pre>
+<p>The old token matches zero rows. The zombie can be as confident as it likes. It’s the same trick as the <code>seq</code> number
+that <a href="../building-tuinime/">throws away stale searches in TuiNime</a>, with higher stakes.</p>
+<h2 id="urgent-shouldnt-mean-forever">Urgent shouldn’t mean forever</h2>
+<p>Three queues for high, normal and low is the obvious design, and it starves low the day high never empties. TaskForge
+has one queue, where priority is a head start measured in time:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">// trimmed</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> PRIORITY_OFFSET_MS</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> { high: </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">60_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, normal: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, low: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">60_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">export</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> const</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> queueScore</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">priority</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50"> Priority</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">runAt</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50"> Date</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">  runAt.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">getTime</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> PRIORITY_OFFSET_MS</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[priority];</span></span></code></pre>
+<p>The lowest score runs first. A low job that has waited more than two minutes beats a high job that arrived just now.
+That’s the whole anti-starvation system: one addition.</p>
+<h2 id="november-giving-it-a-face">November: giving it a face</h2>
+<p>A backend that recovers from crashes looks exactly like a backend that never crashed, which makes it a terrible demo.
+So the new frontend is a foundry. Each ingot is a real job, each hammer is a real process, and each worker has a
+<strong>Kill</strong> button that really kills it.</p>
+<p><img src="/media/taskforge/night-shift.jpg" alt="The night shift: the floor in dark mode, with a full queue and three workers hammering"></p>
+<p>There’s no 3D library under it. Isometric projection is two lines of math on a canvas:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">export</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> const</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> project</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">camera</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50"> Camera</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> number</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> number</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">z</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> =</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ({</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">  x: camera.originX </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> COS</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> camera.scale,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">  y: camera.originY </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ((x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 0.5</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> z) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> camera.scale,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">});</span></span></code></pre>
+<p>The tricky part was time. A Postgres trigger sends <code>NOTIFY</code> on commit and the API relays it over Server-Sent Events, so
+ingots move immediately. Snapshots arrive every couple of seconds to correct anything missed. But a snapshot can be
+<em>older</em> than the event you just animated, and then ingots jump backwards. So each one remembers when it last moved:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (existing </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">&amp;&amp;</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> existing.touched </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> asked) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">continue</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">;</span></span></code></pre>
+<p>Events make it fast. Snapshots make it true.</p>
+<h2 id="testing-by-breaking-it">Testing by breaking it</h2>
+<p>Mocks would have agreed with every bug in that table, so the integration tests start a real API and real workers
+against real databases, and then get mean. They kill processes, cut the connection to Redis, drop every Postgres
+connection and push 500 jobs through four workers to check that each ran exactly once.</p>
+<p>The tests got tested too: nine guarantees were broken on purpose, and the suite caught all nine.</p>
+<p>Squeezing the whole system into one container with a tenth of a CPU, for a free demo, found one more. A burst of reads
+from a single visitor could use up the connection pool and break the live view for everyone. Rate limits don’t stop
+that, because a burst is allowed by definition. A cap on how many lookups run at once does.</p>
+<h2 id="try-to-lose-a-job">Try to lose a job</h2>
+<p>With Docker installed:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">git</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> clone</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> https://github.com/CyberSarvesh/TaskForge.git</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">cd</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> TaskForge</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">docker</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> compose</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> up</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> --build</span></span></code></pre>
+<p>Open <code>localhost:4000</code>, press <strong>Rush order</strong>, and kill a worker while it’s busy.</p>
+<p>One honest limit: this is at-least-once delivery. A worker can send an email and die before writing down that it did,
+and then that email goes out twice. The real fix belongs in the handler, as an idempotency key. The email job here only
+pretends to send, so your inbox is safe.</p>
+<h2 id="what-id-add-next">What I’d add next</h2>
+<ul>
+<li><strong>Batched claims</strong>, because writing to Postgres on every transition is the first ceiling it will hit.</li>
+<li><strong>Partitioned events</strong>, since outside the public demo the history is kept forever.</li>
+<li><strong>Something other than <code>NOTIFY</code></strong> at higher volume, as it serializes the commits that use it.</li>
+</ul>
+<blockquote>
+<p>The general rule: never trust a worker to tell you that it failed. Make it keep proving that it hasn’t.</p>
+</blockquote>
+<p>The code is <a href="https://github.com/CyberSarvesh/TaskForge">on GitHub</a>. If you find a way to lose a job, I very much want
+that issue.</p>
+</div></div><footer class="end" data-astro-cid-3vzhc3g7><p class="sig mono" data-astro-cid-3vzhc3g7><span class="accent" data-astro-cid-3vzhc3g7>EOF</span> · written by Sarvesh Mohite. Spotted a bug? <a href="mailto:sarveshmohite2005@gmail.com?subject=Re%3A%20My%20job%20queue%20said%20completed.%20It%20was%20lying." data-astro-cid-3vzhc3g7>send a patch</a>.</p><nav class="pn" aria-label="More posts" data-astro-cid-3vzhc3g7><a class="newer" href="/never-send-email-in-a-request/" data-astro-cid-3vzhc3g7><span class="mono" data-astro-cid-3vzhc3g7>← newer</span>My API never sends emails (and yours shouldn’t either)</a></nav></footer></article></main><footer class="foot" data-astro-cid-jo6i4kqk><div class="wrap row" data-astro-cid-jo6i4kqk><p class="mono" data-astro-cid-jo6i4kqk><span class="accent" data-astro-cid-jo6i4kqk>●</span> all systems nominal · PID 1 · runlevel: caffeinated</p><ul class="mono" data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a href="https://github.com/CyberSarvesh" data-astro-cid-jo6i4kqk>github</a></li><li data-astro-cid-jo6i4kqk><a href="/" data-astro-cid-jo6i4kqk>blog</a></li><li data-astro-cid-jo6i4kqk><a href="/rss.xml" data-astro-cid-jo6i4kqk>rss</a></li><li data-astro-cid-jo6i4kqk><a href="https://sarveshmohite.me/#contact" data-astro-cid-jo6i4kqk>contact</a></li></ul><p class="mono muted" data-astro-cid-jo6i4kqk>© 2026 Sarvesh Mohite. Built with Astro.</p></div></footer><dialog data-astro-transition-persist="palette" class="palette" aria-label="Command palette" data-palette data-astro-cid-n5udgzh5><div class="box" data-astro-cid-n5udgzh5><div class="search" data-astro-cid-n5udgzh5><span class="mono accent" data-astro-cid-n5udgzh5>❯</span><input type="text" placeholder="Jump to a section, post or repo…" aria-label="Search commands" autocomplete="off" spellcheck="false" data-astro-cid-n5udgzh5><kbd data-astro-cid-n5udgzh5>esc</kbd></div><ul role="listbox" data-astro-cid-n5udgzh5><li role="option" data-group="go to" data-href="https://sarveshmohite.me/" data-label="home  go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Home</span></li><li role="option" data-group="go to" data-href="https://sarveshmohite.me/#work" data-label="work projects go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Work</span><span class="h" data-astro-cid-n5udgzh5>projects</span></li><li role="option" data-group="go to" data-href="https://sarveshmohite.me/#stack" data-label="stack  go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Stack</span></li><li role="option" data-group="go to" data-href="https://sarveshmohite.me/#shell" data-label="shell interactive terminal go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Shell</span><span class="h" data-astro-cid-n5udgzh5>interactive terminal</span></li><li role="option" data-group="go to" data-href="/" data-label="blog  go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Blog</span></li><li role="option" data-group="go to" data-href="https://sarveshmohite.me/#contact" data-label="contact  go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Contact</span></li><li role="option" data-group="posts" data-href="/building-tuinime/" data-label="my terminal has movie posters now  posts" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>posts</span><span class="l" data-astro-cid-n5udgzh5>My terminal has movie posters now</span></li><li role="option" data-group="posts" data-href="/hello-world/" data-label="hello, world (from pid 1)  posts" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>posts</span><span class="l" data-astro-cid-n5udgzh5>hello, world (from PID 1)</span></li><li role="option" data-group="posts" data-href="/never-send-email-in-a-request/" data-label="my api never sends emails (and yours shouldn’t either)  posts" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>posts</span><span class="l" data-astro-cid-n5udgzh5>My API never sends emails (and yours shouldn’t either)</span></li><li role="option" data-group="posts" data-href="/building-taskforge/" data-label="my job queue said completed. it was lying.  posts" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>posts</span><span class="l" data-astro-cid-n5udgzh5>My job queue said completed. It was lying.</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/TaskForge" data-label="taskforge distributed job processing repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>TaskForge</span><span class="h" data-astro-cid-n5udgzh5>Distributed job processing</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/u2md" data-label="u2md docs site → agent-ready markdown repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>u2md</span><span class="h" data-astro-cid-n5udgzh5>Docs site → agent-ready Markdown</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/LogForge" data-label="logforge centralized logging repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>LogForge</span><span class="h" data-astro-cid-n5udgzh5>Centralized logging</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/LLM_OBSERVATORY" data-label="llm observatory look inside language models repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>LLM Observatory</span><span class="h" data-astro-cid-n5udgzh5>Look inside language models</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/Relay" data-label="relay api management repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>Relay</span><span class="h" data-astro-cid-n5udgzh5>API management</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/NeuroVault" data-label="neurovault second brain repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>NeuroVault</span><span class="h" data-astro-cid-n5udgzh5>Second brain</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/TuiNime" data-label="tuinime anime in the terminal repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>TuiNime</span><span class="h" data-astro-cid-n5udgzh5>Anime in the terminal</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/SimpleShell" data-label="simpleshell a shell from scratch repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>SimpleShell</span><span class="h" data-astro-cid-n5udgzh5>A shell from scratch</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/ContradictionFinder" data-label="contradictionfinder rules before actions repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>ContradictionFinder</span><span class="h" data-astro-cid-n5udgzh5>Rules before actions</span></li><li role="option" data-group="actions" data-action="theme" data-label="toggle theme  actions" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>actions</span><span class="l" data-astro-cid-n5udgzh5>Toggle theme</span></li><li role="option" data-group="actions" data-action="email" data-label="copy email address sarveshmohite2005@gmail.com actions" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>actions</span><span class="l" data-astro-cid-n5udgzh5>Copy email address</span><span class="h" data-astro-cid-n5udgzh5>sarveshmohite2005@gmail.com</span></li><li role="option" data-group="actions" data-href="https://github.com/CyberSarvesh" data-label="open github profile  actions" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>actions</span><span class="l" data-astro-cid-n5udgzh5>Open GitHub profile</span></li></ul><p class="empty mono" hidden data-astro-cid-n5udgzh5>no such command. try “blog”.</p><div class="foot mono" data-astro-cid-n5udgzh5><span data-astro-cid-n5udgzh5><kbd data-astro-cid-n5udgzh5>↑</kbd><kbd data-astro-cid-n5udgzh5>↓</kbd> move</span><span data-astro-cid-n5udgzh5><kbd data-astro-cid-n5udgzh5>↵</kbd> run</span><span class="toast" aria-live="polite" data-astro-cid-n5udgzh5></span></div></div></dialog><script type="module" src="/_astro/Palette.astro_astro_type_script_index_0_lang.BbvCKBh0.js"></script><script type="module">function e(){let e=document.querySelectorAll(`.reveal:not(.in)`);if(!(`IntersectionObserver`in window)){e.forEach(e=>e.classList.add(`in`));return}let t=new IntersectionObserver(e=>{for(let n of e)n.isIntersecting&&(n.target.classList.add(`in`),t.unobserve(n.target))},{rootMargin:`0px 0px -8% 0px`,threshold:.08});e.forEach(e=>t.observe(e))}if(document.addEventListener(`astro:page-load`,e),!window.__glow&&matchMedia(`(pointer: fine)`).matches){window.__glow=!0;let e=0,t=0,n=0;window.addEventListener(`pointermove`,r=>{e=r.clientX,t=r.clientY,n||=requestAnimationFrame(()=>{document.documentElement.style.setProperty(`--mx`,e+`px`),document.documentElement.style.setProperty(`--my`,t+`px`),n=0})},{passive:!0})}</script></body></html><script type="module">function e(){let e=document.querySelector(`.prose`);if(!e)return;let t=document.querySelector(`.progress`),n=()=>{let n=e.getBoundingClientRect(),r=n.height-innerHeight*.6,i=Math.min(1,Math.max(0,-n.top/Math.max(r,1)));t.style.transform=`scaleX(${i})`};addEventListener(`scroll`,n,{passive:!0}),document.addEventListener(`astro:before-swap`,()=>removeEventListener(`scroll`,n),{once:!0}),n(),e.querySelectorAll(`pre`).forEach(e=>{if(e.parentElement?.classList.contains(`code`))return;let t=document.createElement(`div`);t.className=`code`,e.replaceWith(t),t.appendChild(e);let n=e.dataset.language;if(n&&n!==`plaintext`){let e=document.createElement(`span`);e.className=`lang`,e.textContent=n,t.appendChild(e)}let r=document.createElement(`button`);r.type=`button`,r.className=`copy`,r.textContent=`copy`,r.onclick=async()=>{try{await navigator.clipboard.writeText(e.innerText)}catch{}r.textContent=`copied ✓`,setTimeout(()=>r.textContent=`copy`,1400)},t.appendChild(r)});let r=[...document.querySelectorAll(`[data-toc]`)];if(!r.length)return;let i=new IntersectionObserver(e=>{for(let t of e)t.isIntersecting&&r.forEach(e=>e.classList.toggle(`on`,e.dataset.toc===t.target.id))},{rootMargin:`-15% 0px -75% 0px`});e.querySelectorAll(`h2[id], h3[id]`).forEach(e=>i.observe(e))}document.addEventListener(`astro:page-load`,e);</script>

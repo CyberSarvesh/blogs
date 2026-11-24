@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="en" class="no-js" data-theme="dark" data-astro-cid-hkbrpulz><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>My terminal has movie posters now · Sarvesh Mohite</title><meta name="description" content="Inside TuiNime, an anime TUI in Rust: one event loop, background tasks, pictures made of text, and a release built from a git tag."><link rel="canonical" href="https://blog.sarveshmohite.me/building-tuinime/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="Sarvesh's blog" href="/rss.xml"><link rel="sitemap" href="/sitemap-index.xml"><meta name="theme-color" content="#07090c"><meta property="og:type" content="article"><meta property="og:title" content="My terminal has movie posters now · Sarvesh Mohite"><meta property="og:description" content="Inside TuiNime, an anime TUI in Rust: one event loop, background tasks, pictures made of text, and a release built from a git tag."><meta property="og:url" content="https://blog.sarveshmohite.me/building-tuinime/"><meta property="og:site_name" content="Sarvesh Mohite"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="My terminal has movie posters now · Sarvesh Mohite"><meta name="twitter:description" content="Inside TuiNime, an anime TUI in Rust: one event loop, background tasks, pictures made of text, and a release built from a git tag."><meta name="author" content="Sarvesh Mohite"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://sarveshmohite.me/#website","url":"https://sarveshmohite.me/","name":"Sarvesh Mohite","alternateName":["CyberSarvesh","sarveshmohite.me"],"publisher":{"@id":"https://sarveshmohite.me/#person"}},{"@type":"Person","@id":"https://sarveshmohite.me/#person","name":"Sarvesh Mohite","alternateName":"CyberSarvesh","url":"https://sarveshmohite.me/","jobTitle":"Backend Developer","address":{"@type":"PostalAddress","addressLocality":"Mumbai","addressCountry":"IN"},"sameAs":["https://github.com/CyberSarvesh","https://leetcode.com/u/darth_sarvesh/","https://www.hackerrank.com/sarveshmohite201"]},{"@type":"BlogPosting","@id":"https://blog.sarveshmohite.me/building-tuinime/#post","headline":"My terminal has movie posters now","description":"Inside TuiNime, an anime TUI in Rust: one event loop, background tasks, pictures made of text, and a release built from a git tag.","url":"https://blog.sarveshmohite.me/building-tuinime/","mainEntityOfPage":"https://blog.sarveshmohite.me/building-tuinime/","datePublished":"2026-11-22T00:00:00.000Z","dateModified":"2026-11-22T00:00:00.000Z","keywords":"rust, tui, async","author":{"@id":"https://sarveshmohite.me/#person"},"publisher":{"@id":"https://sarveshmohite.me/#person"},"isPartOf":{"@id":"https://sarveshmohite.me/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sarveshmohite.me/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://blog.sarveshmohite.me/"},{"@type":"ListItem","position":3,"name":"My terminal has movie posters now","item":"https://blog.sarveshmohite.me/building-tuinime/"}]}]}</script><meta name="generator" content="Astro v7.4.12"><script>
+      (() => {
+        const apply = () => {
+          let t = null;
+          try { t = localStorage.getItem('theme'); } catch {}
+          if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          document.documentElement.dataset.theme = t;
+          document.documentElement.classList.remove('no-js');
+          // Skip the boot intro (and start hero animations at once) after the first visit.
+          let booted = false;
+          try { booted = sessionStorage.getItem('booted') === '1'; } catch {}
+          if (booted || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('booted');
+          }
+        };
+        apply();
+        document.addEventListener('astro:after-swap', apply);
+      })();
+    </script><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.cRmvXsZP.js"></script><link rel="stylesheet" href="/_astro/Base.D9Oh3bVJ.css"><link rel="stylesheet" href="/_astro/_..CHtkLoya.css"><script type="module" src="/_astro/page.CFYkGvk_.js"></script><style>[data-astro-transition-scope="astro-sj7yunko-1"] { view-transition-name: post-building-tuinime; }@layer astro { ::view-transition-old(post-building-tuinime) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(post-building-tuinime) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(post-building-tuinime) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(post-building-tuinime) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-sj7yunko-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-sj7yunko-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-sj7yunko-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-sj7yunko-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-sj7yunko-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-sj7yunko-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-sj7yunko-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-sj7yunko-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head><body data-astro-cid-hkbrpulz><a class="skip" href="#main" data-astro-cid-hkbrpulz>Skip to content</a><div class="cursor-glow" aria-hidden="true" data-astro-cid-hkbrpulz></div><header data-astro-transition-persist="nav" class="nav" data-astro-cid-wpvy4v7s><div class="wrap bar" data-astro-cid-wpvy4v7s><a class="logo" href="https://sarveshmohite.me/" aria-label="Sarvesh Mohite, home" data-astro-cid-wpvy4v7s><span class="u" data-astro-cid-wpvy4v7s>sarvesh</span><span class="at" data-astro-cid-wpvy4v7s>@</span><span class="h" data-astro-cid-wpvy4v7s>mohite</span><span class="c" data-astro-cid-wpvy4v7s>:~/blog$</span><span class="caret" aria-hidden="true" data-astro-cid-wpvy4v7s></span></a><nav aria-label="Primary" data-astro-cid-wpvy4v7s><ul data-astro-cid-wpvy4v7s><li data-astro-cid-wpvy4v7s><a href="https://sarveshmohite.me/projects/" data-nav data-astro-cid-wpvy4v7s><span class="slash" data-astro-cid-wpvy4v7s>/</span>projects</a></li><li data-astro-cid-wpvy4v7s><a href="https://sarveshmohite.me/#stack" data-nav data-astro-cid-wpvy4v7s><span class="slash" data-astro-cid-wpvy4v7s>/</span>stack</a></li><li data-astro-cid-wpvy4v7s><a href="https://sarveshmohite.me/#shell" data-nav data-astro-cid-wpvy4v7s><span class="slash" data-astro-cid-wpvy4v7s>/</span>shell</a></li><li data-astro-cid-wpvy4v7s><a href="/" class="active" data-nav data-astro-cid-wpvy4v7s><span class="slash" data-astro-cid-wpvy4v7s>/</span>blog</a></li><li data-astro-cid-wpvy4v7s><a href="https://sarveshmohite.me/#contact" data-nav data-astro-cid-wpvy4v7s><span class="slash" data-astro-cid-wpvy4v7s>/</span>contact</a></li></ul></nav><div class="tools" data-astro-cid-wpvy4v7s><button class="icon-btn kbar" type="button" data-open-palette aria-label="Open command palette" data-astro-cid-wpvy4v7s><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" data-astro-cid-wpvy4v7s><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 17l6-6-6-6M12 19h8" data-astro-cid-wpvy4v7s></path></svg><kbd data-astro-cid-wpvy4v7s>Ctrl K</kbd></button><button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle light and dark theme" data-astro-cid-wpvy4v7s><svg class="sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" data-astro-cid-wpvy4v7s><circle cx="12" cy="12" r="4" fill="currentColor" data-astro-cid-wpvy4v7s></circle><g stroke="currentColor" stroke-width="2" stroke-linecap="round" data-astro-cid-wpvy4v7s><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" data-astro-cid-wpvy4v7s></path></g></svg><svg class="moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" data-astro-cid-wpvy4v7s><path fill="currentColor" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" data-astro-cid-wpvy4v7s></path></svg></button></div></div></header><script type="module">function e(){let e=document.documentElement,t=e.dataset.theme===`light`?`dark`:`light`,n=()=>{e.dataset.theme=t;try{localStorage.setItem(`theme`,t)}catch{}},r=document;r.startViewTransition&&!matchMedia(`(prefers-reduced-motion: reduce)`).matches?r.startViewTransition(n):n()}if(window.__toggleTheme=e,!window.__navInit){window.__navInit=!0,document.addEventListener(`click`,t=>{t.target.closest(`[data-theme-toggle]`)&&e()});let t=0;window.addEventListener(`scroll`,()=>{let e=window.scrollY,n=document.querySelector(`.nav`);n?.classList.toggle(`scrolled`,e>8),n?.classList.toggle(`hide`,e>400&&e>t),t=e},{passive:!0})}</script><main id="main" data-astro-cid-hkbrpulz><div class="progress" aria-hidden="true" data-astro-cid-3vzhc3g7></div><article class="wrap post" data-astro-cid-3vzhc3g7><header class="head" data-astro-cid-3vzhc3g7><a class="back mono" href="/" data-astro-cid-3vzhc3g7>← cd ..</a><div class="meta mono" data-astro-cid-3vzhc3g7><time datetime="2026-11-22T00:00:00.000Z" data-astro-cid-3vzhc3g7>22 Nov 2026</time><span data-astro-cid-3vzhc3g7>·</span><span data-astro-cid-3vzhc3g7>4 min read</span></div><h1 data-astro-transition-scope="astro-sj7yunko-1" data-astro-cid-3vzhc3g7>My terminal has movie posters now</h1><p class="desc" data-astro-cid-3vzhc3g7>Inside TuiNime, an anime TUI in Rust: one event loop, background tasks, pictures made of text, and a release built from a git tag.</p><ul class="tags mono" data-astro-cid-3vzhc3g7><li data-astro-cid-3vzhc3g7><a href="/tags/rust/" data-astro-cid-3vzhc3g7>#rust</a></li><li data-astro-cid-3vzhc3g7><a href="/tags/tui/" data-astro-cid-3vzhc3g7>#tui</a></li><li data-astro-cid-3vzhc3g7><a href="/tags/async/" data-astro-cid-3vzhc3g7>#async</a></li></ul></header><div class="layout" data-astro-cid-3vzhc3g7><aside class="toc mono" aria-label="On this page" data-astro-cid-3vzhc3g7><p data-astro-cid-3vzhc3g7>on this page</p><ol data-astro-cid-3vzhc3g7><li class="d2" data-astro-cid-3vzhc3g7><a href="#the-shape-of-it" data-toc="the-shape-of-it" data-astro-cid-3vzhc3g7>The shape of it</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#never-wait-in-the-event-loop" data-toc="never-wait-in-the-event-loop" data-astro-cid-3vzhc3g7>Never wait in the event loop</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#responses-arrive-in-the-wrong-order" data-toc="responses-arrive-in-the-wrong-order" data-astro-cid-3vzhc3g7>Responses arrive in the wrong order</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#pictures-made-of-text" data-toc="pictures-made-of-text" data-astro-cid-3vzhc3g7>Pictures made of text</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#the-same-show-has-three-names" data-toc="the-same-show-has-three-names" data-astro-cid-3vzhc3g7>The same show has three names</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#dont-print-ever" data-toc="dont-print-ever" data-astro-cid-3vzhc3g7>Don’t print. Ever.</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#shipping-is-a-git-tag" data-toc="shipping-is-a-git-tag" data-astro-cid-3vzhc3g7>Shipping is a git tag</a></li><li class="d2" data-astro-cid-3vzhc3g7><a href="#what-id-add-next" data-toc="what-id-add-next" data-astro-cid-3vzhc3g7>What I’d add next</a></li></ol></aside><div class="prose" data-astro-cid-3vzhc3g7><p>Terminals are very good at text. An anime browser is mostly pictures, search boxes and waiting for the network, which
+are three things text grids are not famous for.</p>
+<p><a href="https://github.com/CyberSarvesh/TuiNime">TuiNime</a> is my attempt at one anyway: a Rust TUI where you browse what’s
+trending, search as you type, pick an episode, and hand playback to <a href="https://mpv.io">mpv</a>. The interesting part turned
+out to be <strong>everything that has to happen without freezing the screen</strong>.</p>
+<p><img src="/media/tuinime/demo.gif" alt="TuiNime browsing trending shows, searching, opening an episode list and switching themes"></p>
+<h2 id="the-shape-of-it">The shape of it</h2>
+<figure class="tn" role="img" aria-label="TuiNime architecture. An event loop takes input, draws to the terminal through ratatui and starts mpv for playback, without waiting on the network. It spawns tokio tasks that call AniList and the providers over HTTP and send results back as BgEvent messages.">
+<style>
+.tn{margin:0 0 1.6em;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,var(--panel),var(--bg-2));box-shadow:var(--shadow);font-family:var(--font-mono)}
+.tn-head,.tn-key{display:flex;align-items:center;gap:.45rem 1.1rem;padding:.65rem .9rem;font-size:.72rem;line-height:1.5;color:var(--ink-3)}
+.tn-head{border-bottom:1px solid var(--line)}
+.tn-key{border-top:1px solid var(--line);flex-wrap:wrap}
+.tn-lights{display:flex;gap:6px}
+.tn-lights i{width:10px;height:10px;border-radius:50%;background:#28c840}
+.tn-lights i:first-child{background:#ff5f57}
+.tn-lights i:nth-child(2){background:#febc2e}
+.tn-key i{display:inline-block;width:8px;height:8px;margin-right:.45rem;border-radius:50%;background:var(--c)}
+.tn svg{display:block;width:100%;height:auto}
+.tn .tn-s{display:none}
+.tn text{font:600 14px var(--font-mono);fill:var(--ink);text-anchor:middle}
+.tn text.sub{font-size:10.5px;font-weight:400;fill:var(--ink-2)}
+.tn text.lbl{font-size:10.5px;font-weight:500;fill:var(--c)}
+.tn text.start{text-anchor:start}
+.tn text.end{text-anchor:end}
+.tn .box{fill:var(--panel-2);stroke:var(--line-2);stroke-width:1.2}
+.tn .loop{fill:color-mix(in srgb,var(--accent) 10%,var(--panel-2));stroke:var(--accent)}
+.tn .tasks{fill:color-mix(in srgb,var(--warn) 9%,var(--panel-2));stroke:var(--warn)}
+.tn .zone{fill:var(--c);opacity:.035}
+.tn .divide{stroke:var(--line-2);stroke-dasharray:2 5}
+.tn .wire{stroke:var(--c);stroke-width:1.4;opacity:.5}
+.tn .tip{fill:var(--c)}
+.tn .dot{fill:var(--c);animation:tn-move var(--t) linear var(--d) infinite both}
+.tn .icon{fill:none;stroke:var(--ink-3);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.tn .ok{--c:var(--accent)}
+.tn .slow{--c:var(--warn)}
+.tn .net{--c:var(--info)}
+@keyframes tn-move{0%{opacity:0;transform:translateY(0)}12%,60%{opacity:1}72%,100%{opacity:0;transform:translateY(var(--to))}}
+@media (max-width:600px){.tn .tn-l{display:none}.tn .tn-s{display:block}}
+@media (prefers-reduced-motion:reduce){.tn .dot{display:none}}
+</style>
+<div class="tn-head"><span class="tn-lights"><i></i><i></i><i></i></span><span>tuinime · how it fits together</span></div>
+<svg class="tn-l" viewBox="0 0 680 510" aria-hidden="true" focusable="false">
+<rect class="zone ok" width="680" height="270"/>
+<rect class="zone slow" y="270" width="680" height="240"/>
+<rect class="box " x="14" y="16" width="190" height="90" rx="10"/>
+<text class="" x="109" y="72">input</text>
+<text class="sub" x="109" y="90">keys + mouse</text>
+<rect class="box " x="245" y="16" width="190" height="90" rx="10"/>
+<text class="" x="340" y="72">terminal</text>
+<text class="sub" x="340" y="90">via ratatui</text>
+<rect class="box " x="476" y="16" width="190" height="90" rx="10"/>
+<text class="" x="571" y="72">mpv</text>
+<text class="sub" x="571" y="90">plays video</text>
+<g class="icon"><rect x="92" y="29" width="34" height="22" rx="4"/><path d="M99 36h2m5 0h2m5 0h2M100 44h18"/></g>
+<rect x="328" y="29" width="6" height="8" style="fill:var(--warn);opacity:.8"/>
+<rect x="334" y="29" width="6" height="8" style="fill:var(--accent);opacity:.8"/>
+<rect x="340" y="29" width="6" height="8" style="fill:var(--info);opacity:.8"/>
+<rect x="346" y="29" width="6" height="8" style="fill:var(--accent);opacity:.8"/>
+<rect x="328" y="37" width="6" height="8" style="fill:var(--info);opacity:.8"/>
+<rect x="334" y="37" width="6" height="8" style="fill:var(--warn);opacity:.8"/>
+<rect x="340" y="37" width="6" height="8" style="fill:var(--accent);opacity:.8"/>
+<rect x="346" y="37" width="6" height="8" style="fill:var(--warn);opacity:.8"/>
+<rect x="328" y="45" width="6" height="8" style="fill:var(--info);opacity:.8"/>
+<rect x="334" y="45" width="6" height="8" style="fill:var(--warn);opacity:.8"/>
+<rect x="340" y="45" width="6" height="8" style="fill:var(--accent);opacity:.8"/>
+<rect x="346" y="45" width="6" height="8" style="fill:var(--info);opacity:.8"/>
+<g class="icon"><circle cx="571" cy="40" r="12"/><path d="M568 34v12l9-6z"/></g>
+<g class="ok"><path class="wire" d="M109 106V146"/><path class="tip" d="M104.5 145h9L109 152z"/><circle class="dot" cx="109" cy="106" r="3.5" style="--to:46px;--d:0s;--t:2.6s"/>
+<text class="lbl start" x="118" y="133">event</text>
+</g>
+<g class="ok"><path class="wire" d="M340 152V112"/><path class="tip" d="M335.5 113h9L340 106z"/><circle class="dot" cx="340" cy="152" r="3.5" style="--to:-46px;--d:0.5s;--t:2.6s"/>
+<text class="lbl start" x="349" y="133">draw</text>
+</g>
+<g class="ok"><path class="wire" d="M571 152V112"/><path class="tip" d="M566.5 113h9L571 106z"/><circle class="dot" cx="571" cy="152" r="3.5" style="--to:-46px;--d:1.5s;--t:2.6s"/>
+<text class="lbl start" x="580" y="133">play</text>
+</g>
+<rect class="box loop" x="14" y="152" width="652" height="62" rx="10"/>
+<text class="" x="340" y="179">event loop</text>
+<text class="sub" x="340" y="198">never waits on the network</text>
+<path class="divide" d="M0 270H680"/>
+<g class="slow"><path class="wire" d="M149.6 214V320"/><path class="tip" d="M145.1 319h9L149.6 326z"/><circle class="dot" cx="149.6" cy="214" r="3.5" style="--to:112px;--d:0.8s;--t:2.6s"/>
+</g>
+<g class="ok"><path class="wire" d="M530.4 326V220"/><path class="tip" d="M525.9 221h9L530.4 214z"/><circle class="dot" cx="530.4" cy="326" r="3.5" style="--to:-112px;--d:2s;--t:2.6s"/>
+</g>
+<g class="slow">
+<text class="lbl start" x="157.6" y="305">spawn</text>
+</g>
+<g class="ok">
+<text class="lbl end" x="522.4" y="243">BgEvent</text>
+</g>
+<g class="ok">
+<text class="lbl" x="340" y="261">↑ instant</text>
+</g><g class="slow">
+<text class="lbl" x="340" y="287">↓ can be slow</text>
+</g>
+<rect class="box tasks" x="14" y="326" width="652" height="62" rx="10"/>
+<text class="" x="340" y="353">tokio tasks</text>
+<text class="sub" x="340" y="372">one for each network call</text>
+<rect class="box " x="14" y="436" width="300" height="60" rx="10"/>
+<text class="" x="164" y="462">AniList</text>
+<text class="sub" x="164" y="480">titles, posters</text>
+<g class="net"><path class="wire" d="M152 388V430"/><path class="tip" d="M147.5 429h9L152 436z"/><circle class="dot" cx="152" cy="388" r="3.5" style="--to:48px;--d:0.3s;--t:2.6s"/>
+<text class="lbl end" x="143" y="416">HTTP</text>
+</g>
+<g class="net"><path class="wire" d="M176 436V394"/><path class="tip" d="M171.5 395h9L176 388z"/><circle class="dot" cx="176" cy="436" r="3.5" style="--to:-48px;--d:1.2s;--t:2.6s"/>
+</g>
+<rect class="box " x="366" y="436" width="300" height="60" rx="10"/>
+<text class="" x="516" y="462">providers</text>
+<text class="sub" x="516" y="480">episodes, streams</text>
+<g class="net"><path class="wire" d="M504 388V430"/><path class="tip" d="M499.5 429h9L504 436z"/><circle class="dot" cx="504" cy="388" r="3.5" style="--to:48px;--d:1.3s;--t:2.6s"/>
+<text class="lbl end" x="495" y="416">HTTP</text>
+</g>
+<g class="net"><path class="wire" d="M528 436V394"/><path class="tip" d="M523.5 395h9L528 388z"/><circle class="dot" cx="528" cy="436" r="3.5" style="--to:-48px;--d:2.2s;--t:2.6s"/>
+</g>
+</svg>
+<svg class="tn-s" viewBox="0 0 340 510" aria-hidden="true" focusable="false">
+<rect class="zone ok" width="340" height="270"/>
+<rect class="zone slow" y="270" width="340" height="240"/>
+<rect class="box " x="14" y="16" width="98" height="90" rx="10"/>
+<text class="" x="63" y="72">input</text>
+<text class="sub" x="63" y="90">keys + mouse</text>
+<rect class="box " x="121" y="16" width="98" height="90" rx="10"/>
+<text class="" x="170" y="72">terminal</text>
+<text class="sub" x="170" y="90">via ratatui</text>
+<rect class="box " x="228" y="16" width="98" height="90" rx="10"/>
+<text class="" x="277" y="72">mpv</text>
+<text class="sub" x="277" y="90">plays video</text>
+<g class="icon"><rect x="46" y="29" width="34" height="22" rx="4"/><path d="M53 36h2m5 0h2m5 0h2M54 44h18"/></g>
+<rect x="158" y="29" width="6" height="8" style="fill:var(--warn);opacity:.8"/>
+<rect x="164" y="29" width="6" height="8" style="fill:var(--accent);opacity:.8"/>
+<rect x="170" y="29" width="6" height="8" style="fill:var(--info);opacity:.8"/>
+<rect x="176" y="29" width="6" height="8" style="fill:var(--accent);opacity:.8"/>
+<rect x="158" y="37" width="6" height="8" style="fill:var(--info);opacity:.8"/>
+<rect x="164" y="37" width="6" height="8" style="fill:var(--warn);opacity:.8"/>
+<rect x="170" y="37" width="6" height="8" style="fill:var(--accent);opacity:.8"/>
+<rect x="176" y="37" width="6" height="8" style="fill:var(--warn);opacity:.8"/>
+<rect x="158" y="45" width="6" height="8" style="fill:var(--info);opacity:.8"/>
+<rect x="164" y="45" width="6" height="8" style="fill:var(--warn);opacity:.8"/>
+<rect x="170" y="45" width="6" height="8" style="fill:var(--accent);opacity:.8"/>
+<rect x="176" y="45" width="6" height="8" style="fill:var(--info);opacity:.8"/>
+<g class="icon"><circle cx="277" cy="40" r="12"/><path d="M274 34v12l9-6z"/></g>
+<g class="ok"><path class="wire" d="M63 106V146"/><path class="tip" d="M58.5 145h9L63 152z"/><circle class="dot" cx="63" cy="106" r="3.5" style="--to:46px;--d:0s;--t:2.6s"/>
+<text class="lbl start" x="72" y="133">event</text>
+</g>
+<g class="ok"><path class="wire" d="M170 152V112"/><path class="tip" d="M165.5 113h9L170 106z"/><circle class="dot" cx="170" cy="152" r="3.5" style="--to:-46px;--d:0.5s;--t:2.6s"/>
+<text class="lbl start" x="179" y="133">draw</text>
+</g>
+<g class="ok"><path class="wire" d="M277 152V112"/><path class="tip" d="M272.5 113h9L277 106z"/><circle class="dot" cx="277" cy="152" r="3.5" style="--to:-46px;--d:1.5s;--t:2.6s"/>
+<text class="lbl start" x="286" y="133">play</text>
+</g>
+<rect class="box loop" x="14" y="152" width="312" height="62" rx="10"/>
+<text class="" x="170" y="179">event loop</text>
+<text class="sub" x="170" y="198">never waits on the network</text>
+<path class="divide" d="M0 270H340"/>
+<g class="slow"><path class="wire" d="M74.8 214V320"/><path class="tip" d="M70.3 319h9L74.8 326z"/><circle class="dot" cx="74.8" cy="214" r="3.5" style="--to:112px;--d:0.8s;--t:2.6s"/>
+</g>
+<g class="ok"><path class="wire" d="M265.2 326V220"/><path class="tip" d="M260.7 221h9L265.2 214z"/><circle class="dot" cx="265.2" cy="326" r="3.5" style="--to:-112px;--d:2s;--t:2.6s"/>
+</g>
+<g class="slow">
+<text class="lbl start" x="82.8" y="305">spawn</text>
+</g>
+<g class="ok">
+<text class="lbl end" x="257.2" y="243">BgEvent</text>
+</g>
+<g class="ok">
+<text class="lbl" x="170" y="261">↑ instant</text>
+</g><g class="slow">
+<text class="lbl" x="170" y="287">↓ can be slow</text>
+</g>
+<rect class="box tasks" x="14" y="326" width="312" height="62" rx="10"/>
+<text class="" x="170" y="353">tokio tasks</text>
+<text class="sub" x="170" y="372">one for each network call</text>
+<rect class="box " x="14" y="436" width="150" height="60" rx="10"/>
+<text class="" x="89" y="462">AniList</text>
+<text class="sub" x="89" y="480">titles, posters</text>
+<g class="net"><path class="wire" d="M77 388V430"/><path class="tip" d="M72.5 429h9L77 436z"/><circle class="dot" cx="77" cy="388" r="3.5" style="--to:48px;--d:0.3s;--t:2.6s"/>
+<text class="lbl end" x="68" y="416">HTTP</text>
+</g>
+<g class="net"><path class="wire" d="M101 436V394"/><path class="tip" d="M96.5 395h9L101 388z"/><circle class="dot" cx="101" cy="436" r="3.5" style="--to:-48px;--d:1.2s;--t:2.6s"/>
+</g>
+<rect class="box " x="176" y="436" width="150" height="60" rx="10"/>
+<text class="" x="251" y="462">providers</text>
+<text class="sub" x="251" y="480">episodes, streams</text>
+<g class="net"><path class="wire" d="M239 388V430"/><path class="tip" d="M234.5 429h9L239 436z"/><circle class="dot" cx="239" cy="388" r="3.5" style="--to:48px;--d:1.3s;--t:2.6s"/>
+<text class="lbl end" x="230" y="416">HTTP</text>
+</g>
+<g class="net"><path class="wire" d="M263 436V394"/><path class="tip" d="M258.5 395h9L263 388z"/><circle class="dot" cx="263" cy="436" r="3.5" style="--to:-48px;--d:2.2s;--t:2.6s"/>
+</g>
+</svg>
+<div class="tn-key"><span class="ok"><i></i>instant</span><span class="slow"><i></i>background work</span><span class="net"><i></i>network</span></div>
+</figure>
+<p><a href="https://ratatui.rs">ratatui</a> draws the interface, <a href="https://tokio.rs">tokio</a> runs the slow work, and mpv does the one
+job I have no business rewriting: playing video.</p>
+<h2 id="never-wait-in-the-event-loop">Never wait in the event loop</h2>
+<p>If the loop that reads the keyboard also waits for HTTP, a slow server means a dead keyboard. So every network call
+gets its own task, and the only way back is a message:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="rust"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">pub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> fn</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> spawn_search</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(catalog</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50"> Catalog</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, tx</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50"> UnboundedSender</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">&lt;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">BgEvent</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">&gt;, seq</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50"> u64</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, query</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50"> String</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) {</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">    tokio</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">spawn</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">async</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> move</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">        let</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> catalog</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">search</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">&amp;</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">query, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">20</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">.await.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">map_err</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">|</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">e</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">|</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> format!</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"{e:#}"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">));</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">        let</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> _ </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> tx</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">send</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">BgEvent</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">Search</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> { seq, query, result });</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    });</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span></code></pre>
+<p>The main loop waits for whichever happens first, a result or some input:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="rust"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">// trimmed</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">let</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ev </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50"> tokio</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">select!</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> {</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">    Some</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(bg) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> app</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">next_background</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> {</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">        app</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">on_background</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(bg)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">.await</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">;</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">        continue</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ev </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> events</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">next</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ev,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">};</span></span></code></pre>
+<p>It’s the same idea as <a href="../never-send-email-in-a-request/">my API that never sends emails</a>: accept the work, return
+straight away, deliver the result later. The “client” is just a person holding the down arrow.</p>
+<h2 id="responses-arrive-in-the-wrong-order">Responses arrive in the wrong order</h2>
+<p>Live search waits for a 350 ms pause in typing before it sends anything. That cuts down on requests, but it doesn’t
+order them: the search for <code>fri</code> can still finish after the search for <code>frieren</code>.</p>
+<p>So each search carries the <code>seq</code> number you saw above, and a result with an old number is dropped:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="rust"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> seq </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">!=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> self</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">.</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">search</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">.</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">seq {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    return</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">; </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390">// superseded by a newer search</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span></code></pre>
+<h2 id="pictures-made-of-text">Pictures made of text</h2>
+<p>Some terminals can show real images, through the Kitty, Sixel or iTerm2 protocols. For the rest there is a lovely
+trick: the character <code>▀</code> fills the top half of a cell. Give it a foreground and a background color and each cell
+becomes two pixels.</p>
+<p>TuiNime uses <a href="https://github.com/ratatui/ratatui-image">ratatui-image</a> to ask the terminal what it supports at
+startup, with half-blocks as the fallback. Two details matter around it:</p>
+<ul>
+<li><strong>Encoding is expensive</strong>, so encoded posters are cached by <code>(url, width, height)</code> and not redone every frame.</li>
+<li><strong>Sixel pixels aren’t cells.</strong> ratatui erases by diffing cells, so it can’t see them. The screen is cleared whenever
+the view changes, or old posters would haunt the next one.</li>
+</ul>
+<p><img src="/media/tuinime/details.png" alt="The details screen, with a poster drawn in half-blocks next to the synopsis and episode grid"></p>
+<h2 id="the-same-show-has-three-names">The same show has three names</h2>
+<p>AniList knows a show by its English, romaji and native titles. A provider usually knows one of them, and its IDs mean
+nothing to AniList. So TuiNime searches by each name, lowercases and strips the punctuation, and ranks what comes back:</p>
+<table>
+<thead>
+<tr>
+<th>match</th>
+<th>rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>exact</td>
+<td>3</td>
+</tr>
+<tr>
+<td>one is a prefix of the other</td>
+<td>2</td>
+</tr>
+<tr>
+<td>one contains the other</td>
+<td>1</td>
+</tr>
+<tr>
+<td>none of these</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Ties go to the closest length. It’s not clever, and that is what I like about it: when it picks wrong, I can see why.</p>
+<p>Providers also go down, so they all sit behind one trait. If the first can’t produce a playable link, the next gets
+the same show and episode number, and the status bar says who failed.</p>
+<h2 id="dont-print-ever">Don’t print. Ever.</h2>
+<p>In a TUI, stderr and the interface share a screen, so one stray warning scribbles over the layout. TuiNime logs to a
+file instead, and a panic hook puts the terminal back before the error prints:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="rust"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">// trimmed</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">std</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">panic</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">set_hook</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">Box</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">new</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">move</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> |</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">info</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">|</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    let</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> _ </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> disable_raw_mode</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">();</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    let</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> _ </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> execute!</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">std</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">io</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">::</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">stdout</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(), </span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">DisableMouseCapture</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">LeaveAlternateScreen</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">);</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB">    orig_hook</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(info);</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}));</span></span></code></pre>
+<p>A crash should cost you the app, not the terminal.</p>
+<h2 id="shipping-is-a-git-tag">Shipping is a git tag</h2>
+<p><a href="https://github.com/axodotdev/cargo-dist">dist</a> generates the release workflow. Pushing <code>v0.1.0</code> built binaries for
+Windows, Linux and macOS, published them with checksums and installers, and updated my Homebrew tap.</p>
+<p>You need <a href="https://mpv.io/installation/">mpv</a> on your <code>PATH</code>. Then, on macOS or Linux with Homebrew:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">brew</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> install</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> CyberSarvesh/tap/tuinime</span></span></code></pre>
+<p>Or on Windows, in PowerShell:</p>
+<pre class="astro-code astro-code-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">powershell </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ExecutionPolicy Bypass </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">c </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"irm https://github.com/CyberSarvesh/TuiNime/releases/latest/download/tuinime-installer.ps1 | iex"</span></span></code></pre>
+<p>TuiNime doesn’t host any video. The providers are unofficial third-party sites that I don’t control, so check what is
+licensed and legal where you live, and pay for the shows you love.</p>
+<h2 id="what-id-add-next">What I’d add next</h2>
+<ul>
+<li><strong>Decode posters off the render path.</strong> Network work is in the background, but decoding a cached image still
+happens while drawing.</li>
+<li><strong>More package managers</strong>, so installing is one familiar command everywhere.</li>
+<li><strong>Licensed sources</strong>, wherever one offers a way in for a client like this.</li>
+</ul>
+<blockquote>
+<p>The general rule: the loop that draws the screen should never be the one doing the waiting.</p>
+</blockquote>
+<p>The code is <a href="https://github.com/CyberSarvesh/TuiNime">on GitHub</a>. Issues, and corrections to my Rust, are welcome.</p>
+</div></div><footer class="end" data-astro-cid-3vzhc3g7><p class="sig mono" data-astro-cid-3vzhc3g7><span class="accent" data-astro-cid-3vzhc3g7>EOF</span> · written by Sarvesh Mohite. Spotted a bug? <a href="mailto:sarveshmohite2005@gmail.com?subject=Re%3A%20My%20terminal%20has%20movie%20posters%20now" data-astro-cid-3vzhc3g7>send a patch</a>.</p><nav class="pn" aria-label="More posts" data-astro-cid-3vzhc3g7><span data-astro-cid-3vzhc3g7></span><a class="older" href="/hello-world/" data-astro-cid-3vzhc3g7><span class="mono" data-astro-cid-3vzhc3g7>older →</span>hello, world (from PID 1)</a></nav></footer></article></main><footer class="foot" data-astro-cid-jo6i4kqk><div class="wrap row" data-astro-cid-jo6i4kqk><p class="mono" data-astro-cid-jo6i4kqk><span class="accent" data-astro-cid-jo6i4kqk>●</span> all systems nominal · PID 1 · runlevel: caffeinated</p><ul class="mono" data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a href="https://github.com/CyberSarvesh" data-astro-cid-jo6i4kqk>github</a></li><li data-astro-cid-jo6i4kqk><a href="/" data-astro-cid-jo6i4kqk>blog</a></li><li data-astro-cid-jo6i4kqk><a href="/rss.xml" data-astro-cid-jo6i4kqk>rss</a></li><li data-astro-cid-jo6i4kqk><a href="https://sarveshmohite.me/#contact" data-astro-cid-jo6i4kqk>contact</a></li></ul><p class="mono muted" data-astro-cid-jo6i4kqk>© 2026 Sarvesh Mohite. Built with Astro.</p></div></footer><dialog data-astro-transition-persist="palette" class="palette" aria-label="Command palette" data-palette data-astro-cid-n5udgzh5><div class="box" data-astro-cid-n5udgzh5><div class="search" data-astro-cid-n5udgzh5><span class="mono accent" data-astro-cid-n5udgzh5>❯</span><input type="text" placeholder="Jump to a section, post or repo…" aria-label="Search commands" autocomplete="off" spellcheck="false" data-astro-cid-n5udgzh5><kbd data-astro-cid-n5udgzh5>esc</kbd></div><ul role="listbox" data-astro-cid-n5udgzh5><li role="option" data-group="go to" data-href="https://sarveshmohite.me/" data-label="home  go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Home</span></li><li role="option" data-group="go to" data-href="https://sarveshmohite.me/#work" data-label="work projects go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Work</span><span class="h" data-astro-cid-n5udgzh5>projects</span></li><li role="option" data-group="go to" data-href="https://sarveshmohite.me/#stack" data-label="stack  go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Stack</span></li><li role="option" data-group="go to" data-href="https://sarveshmohite.me/#shell" data-label="shell interactive terminal go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Shell</span><span class="h" data-astro-cid-n5udgzh5>interactive terminal</span></li><li role="option" data-group="go to" data-href="/" data-label="blog  go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Blog</span></li><li role="option" data-group="go to" data-href="https://sarveshmohite.me/#contact" data-label="contact  go to" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>go to</span><span class="l" data-astro-cid-n5udgzh5>Contact</span></li><li role="option" data-group="posts" data-href="/building-tuinime/" data-label="my terminal has movie posters now  posts" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>posts</span><span class="l" data-astro-cid-n5udgzh5>My terminal has movie posters now</span></li><li role="option" data-group="posts" data-href="/hello-world/" data-label="hello, world (from pid 1)  posts" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>posts</span><span class="l" data-astro-cid-n5udgzh5>hello, world (from PID 1)</span></li><li role="option" data-group="posts" data-href="/never-send-email-in-a-request/" data-label="my api never sends emails (and yours shouldn’t either)  posts" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>posts</span><span class="l" data-astro-cid-n5udgzh5>My API never sends emails (and yours shouldn’t either)</span></li><li role="option" data-group="posts" data-href="/building-taskforge/" data-label="my job queue said completed. it was lying.  posts" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>posts</span><span class="l" data-astro-cid-n5udgzh5>My job queue said completed. It was lying.</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/TaskForge" data-label="taskforge distributed job processing repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>TaskForge</span><span class="h" data-astro-cid-n5udgzh5>Distributed job processing</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/u2md" data-label="u2md docs site → agent-ready markdown repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>u2md</span><span class="h" data-astro-cid-n5udgzh5>Docs site → agent-ready Markdown</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/LogForge" data-label="logforge centralized logging repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>LogForge</span><span class="h" data-astro-cid-n5udgzh5>Centralized logging</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/LLM_OBSERVATORY" data-label="llm observatory look inside language models repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>LLM Observatory</span><span class="h" data-astro-cid-n5udgzh5>Look inside language models</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/Relay" data-label="relay api management repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>Relay</span><span class="h" data-astro-cid-n5udgzh5>API management</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/NeuroVault" data-label="neurovault second brain repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>NeuroVault</span><span class="h" data-astro-cid-n5udgzh5>Second brain</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/TuiNime" data-label="tuinime anime in the terminal repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>TuiNime</span><span class="h" data-astro-cid-n5udgzh5>Anime in the terminal</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/SimpleShell" data-label="simpleshell a shell from scratch repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>SimpleShell</span><span class="h" data-astro-cid-n5udgzh5>A shell from scratch</span></li><li role="option" data-group="repos" data-href="https://github.com/CyberSarvesh/ContradictionFinder" data-label="contradictionfinder rules before actions repos" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>repos</span><span class="l" data-astro-cid-n5udgzh5>ContradictionFinder</span><span class="h" data-astro-cid-n5udgzh5>Rules before actions</span></li><li role="option" data-group="actions" data-action="theme" data-label="toggle theme  actions" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>actions</span><span class="l" data-astro-cid-n5udgzh5>Toggle theme</span></li><li role="option" data-group="actions" data-action="email" data-label="copy email address sarveshmohite2005@gmail.com actions" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>actions</span><span class="l" data-astro-cid-n5udgzh5>Copy email address</span><span class="h" data-astro-cid-n5udgzh5>sarveshmohite2005@gmail.com</span></li><li role="option" data-group="actions" data-href="https://github.com/CyberSarvesh" data-label="open github profile  actions" data-astro-cid-n5udgzh5><span class="g mono" data-astro-cid-n5udgzh5>actions</span><span class="l" data-astro-cid-n5udgzh5>Open GitHub profile</span></li></ul><p class="empty mono" hidden data-astro-cid-n5udgzh5>no such command. try “blog”.</p><div class="foot mono" data-astro-cid-n5udgzh5><span data-astro-cid-n5udgzh5><kbd data-astro-cid-n5udgzh5>↑</kbd><kbd data-astro-cid-n5udgzh5>↓</kbd> move</span><span data-astro-cid-n5udgzh5><kbd data-astro-cid-n5udgzh5>↵</kbd> run</span><span class="toast" aria-live="polite" data-astro-cid-n5udgzh5></span></div></div></dialog><script type="module" src="/_astro/Palette.astro_astro_type_script_index_0_lang.BbvCKBh0.js"></script><script type="module">function e(){let e=document.querySelectorAll(`.reveal:not(.in)`);if(!(`IntersectionObserver`in window)){e.forEach(e=>e.classList.add(`in`));return}let t=new IntersectionObserver(e=>{for(let n of e)n.isIntersecting&&(n.target.classList.add(`in`),t.unobserve(n.target))},{rootMargin:`0px 0px -8% 0px`,threshold:.08});e.forEach(e=>t.observe(e))}if(document.addEventListener(`astro:page-load`,e),!window.__glow&&matchMedia(`(pointer: fine)`).matches){window.__glow=!0;let e=0,t=0,n=0;window.addEventListener(`pointermove`,r=>{e=r.clientX,t=r.clientY,n||=requestAnimationFrame(()=>{document.documentElement.style.setProperty(`--mx`,e+`px`),document.documentElement.style.setProperty(`--my`,t+`px`),n=0})},{passive:!0})}</script></body></html><script type="module">function e(){let e=document.querySelector(`.prose`);if(!e)return;let t=document.querySelector(`.progress`),n=()=>{let n=e.getBoundingClientRect(),r=n.height-innerHeight*.6,i=Math.min(1,Math.max(0,-n.top/Math.max(r,1)));t.style.transform=`scaleX(${i})`};addEventListener(`scroll`,n,{passive:!0}),document.addEventListener(`astro:before-swap`,()=>removeEventListener(`scroll`,n),{once:!0}),n(),e.querySelectorAll(`pre`).forEach(e=>{if(e.parentElement?.classList.contains(`code`))return;let t=document.createElement(`div`);t.className=`code`,e.replaceWith(t),t.appendChild(e);let n=e.dataset.language;if(n&&n!==`plaintext`){let e=document.createElement(`span`);e.className=`lang`,e.textContent=n,t.appendChild(e)}let r=document.createElement(`button`);r.type=`button`,r.className=`copy`,r.textContent=`copy`,r.onclick=async()=>{try{await navigator.clipboard.writeText(e.innerText)}catch{}r.textContent=`copied ✓`,setTimeout(()=>r.textContent=`copy`,1400)},t.appendChild(r)});let r=[...document.querySelectorAll(`[data-toc]`)];if(!r.length)return;let i=new IntersectionObserver(e=>{for(let t of e)t.isIntersecting&&r.forEach(e=>e.classList.toggle(`on`,e.dataset.toc===t.target.id))},{rootMargin:`-15% 0px -75% 0px`});e.querySelectorAll(`h2[id], h3[id]`).forEach(e=>i.observe(e))}document.addEventListener(`astro:page-load`,e);</script>
