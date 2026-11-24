@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://blog.sarveshmohite.me/sitemap-index.xml
+
+# Plain-text summary for AI agents: https://blog.sarveshmohite.me/llms.txt

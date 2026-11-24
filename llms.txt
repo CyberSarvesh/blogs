@@ -1,0 +1,16 @@
+# Sarvesh Mohite's blog
+
+> Field notes from the backend by Sarvesh Mohite, a backend developer in Mumbai: queues, databases, and learning systems programming. Portfolio: https://sarveshmohite.me/
+
+## Writing
+
+- [My terminal has movie posters now](https://blog.sarveshmohite.me/building-tuinime/) (2026-11-22): Inside TuiNime, an anime TUI in Rust: one event loop, background tasks, pictures made of text, and a release built from a git tag.
+- [hello, world (from PID 1)](https://blog.sarveshmohite.me/hello-world/) (2026-11-14): Why this blog exists, what I plan to write about, and why it lives on its own subdomain.
+- [My API never sends emails (and yours shouldn’t either)](https://blog.sarveshmohite.me/never-send-email-in-a-request/) (2026-11-10): What I learned building TaskForge: move slow work out of the request path with Postgres, Redis and a pool of workers.
+- [My job queue said completed. It was lying.](https://blog.sarveshmohite.me/building-taskforge/) (2026-05-22): Inside TaskForge: the small queue I built in March, the ways it lost work, and the November rebuild with leases, fencing tokens and a factory floor you can break.
+
+## More
+
+- [llms-full.txt](https://blog.sarveshmohite.me/llms-full.txt): every post in full, as Markdown
+- [About the author](https://sarveshmohite.me/about/)
+- [RSS](https://blog.sarveshmohite.me/rss.xml)
