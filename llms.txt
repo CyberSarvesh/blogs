@@ -1,6 +1,6 @@
 # Sarvesh Mohite's blog
 
-> Field notes from the backend by Sarvesh Mohite, a backend developer in Mumbai: queues, databases, and learning systems programming. Portfolio: https://sarveshmohite.me/
+> Field notes from the workbench by Sarvesh Mohite, a software engineer in Mumbai: queues and databases, the apps in front of them, and learning systems programming. Portfolio: https://sarveshmohite.me/
 
 ## Writing
 
